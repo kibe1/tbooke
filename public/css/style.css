@@ -1,0 +1,198 @@
+label.form-label {
+    font-weight: 500;
+}
+body, html {
+    font-family: "Nunito", sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Outfit", sans-serif;
+  }
+  .sidebar-header {
+    color: #000 !important;
+    background-color: #c5d5e4 !important; 
+  }
+  .card-title-dashboard {
+    color: #ffffff !important;
+    font-size: 1.04rem !important;
+}
+.learning{
+  background-color: #088484 !important;
+  color: #fff !important;
+}
+
+.resources{
+  background-color: #DCB3DD !important;
+  color: #fff !important;
+}
+.card-header{
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+.schools{
+  background-color: #0b495b !important;
+  color: #fff !important;
+}
+.blueboard {
+  background-color: #4050E8 !important;
+  color: #fff !important;
+}
+.sidebar, .sidebar-content{
+  background-color: #c5d5e4 !important; 
+}
+.sidebar-link, a.sidebar-link {
+  background-color: #c5d5e4 !important; 
+  color: #000 !important;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+
+.card-body-forms {
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
+}
+
+#successModal{
+  transform: translate(0, -150px);
+}
+
+
+h5#successModalLabel {
+    margin-right: 15px;
+}
+
+.timeline-create-post {
+  width: 300px;
+  background-color: #766c6c !important;
+  text-align: left !important;
+  border-radius: 50px !important;
+  padding: 10px !important;
+  font-size: 14px !important;  
+}
+
+.dashboard-cards-a {
+  text-decoration: unset !important;
+}
+
+.logo {
+  width: 142px !important;
+}
+
+.comment-area {
+  border: 2px #7e7c7c solid !important;
+  border-radius: 50px !important;
+}
+
+.comment-box {
+  display: none;
+}
+
+#activityFeed{
+  box-shadow: unset;
+  background-color: unset;
+}
+.post-box{
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 0 0.875rem 0 rgba(33,37,41,.05);
+  margin-bottom: 1.5rem;
+}
+.comment-item-inner-box{
+  background-color: #ededed;
+  padding: 0.5rem;
+  border-radius: 15px;
+}
+.submit-comment-btn, .comment-item {
+  margin-bottom: 1rem;
+}
+.submit-comment-btn {
+  border-radius: 16px !important;
+}
+
+.form-control.comment-area {
+    line-height: 1.5;
+    padding-top: 20px;
+    padding-bottom: 1px;
+}
+
+.sidebar-link svg {
+  color: #000 !important;
+}
+.about p{
+  font-size: 18px;
+}
+.about-btn {
+  background-color: #FFA500 !important; 
+  color: #fff !important;
+  margin-top: 2.5rem;
+}
+.about-h1 {color: #FFA500 !important;}
+.about-btn:hover{
+  background-color: #5ACFF3 !important; 
+  color: #fff !important;
+}
+.about-rows {
+  padding: 2rem 2.5rem;
+}
+.about-card {
+  margin-top: 35px;
+}
+.about-img{
+  border-radius: 12px !important; 
+}
+
+@media screen and (max-width: 720px) {
+  .rounded-circle-about {
+    border-radius: 50% !important;
+    width: 80px !important;
+  }
+}
+.about-ul {
+  font-size: 18px;
+}
+.col-12.col-lg-6.about.content-about {
+  margin-top: 55px !important;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+@media screen and (max-width: 720px) {
+  button.btn.btn-secondary.timeline-create-post {
+    width: 72% !important;
+  }
+  .timeline-create-post{
+    font-size: 12px !important;
+  }
+  .post-box,  .card-body {
+    padding: 0 !important;
+  }
+  .form-control.comment-area {
+    line-height: 1;
+    padding-top: 13px;
+    padding-bottom: 0px;
+  }
+  .post-box {
+    padding-top: 20px !important;
+    padding-left: 5px !important;
+    padding-right: 15px !important;
+    padding-bottom: 20px !important;
+  }
+  .comment-box {
+    padding-top: 15px !important;
+  }
+}
+
+/* Custom CSS */
+@media (max-width: 767.98px) {
+  .comment-item {
+      display: block !important; /* Unset d-flex and set display to block on mobile */
+  }
+  .comment-item-inner-box {
+      width: 100%; /* Fill the width */
+  }
+}
