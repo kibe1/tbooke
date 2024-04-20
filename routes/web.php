@@ -13,6 +13,7 @@ Route::get('/about', function () {return view('about'); });
 
 
 
+
 Route::middleware('auth')->group(function () {
 
     // Authenticated routes
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('/feed', [FeedController::class, 'feeds'])->name('feed');
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+    Route::get('/learning-resources', [FeedController::class, 'learning'])->name('learning-resources');
 
 });
 
