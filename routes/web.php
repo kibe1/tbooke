@@ -14,7 +14,7 @@ Route::get('/about', function () {return view('about'); });
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     // Authenticated routes
     Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');

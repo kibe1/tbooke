@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\TeacherDetail;
@@ -45,6 +46,16 @@ class RegisteredUserController extends Controller
             'profile_type' => $request->profile_type,
             'password' => Hash::make($request->password),
         ]);
+
+            // Generate OTP
+        $otp = mt_rand(100000, 999999);
+        // Store OTP in the user's record
+        $user->otp = $otp;
+        $user->save();
+
+
+        // Dispatch the verification event
+        $user->sendEmailVerificationNotification();         
     
         // Assign role based on profile_type
         $user->assignRole($request->profile_type);
@@ -71,6 +82,6 @@ class RegisteredUserController extends Controller
     
         Auth::login($user);
     
-        return redirect(route('dashboard'));
+        return redirect()->route('verification.notice')->with('id', $user->id);
     }
 }
