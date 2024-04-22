@@ -25,9 +25,9 @@
 					    <div class="row mb-3">
 						  <div class="col-md-6 justify-content-between align-items-center">
 						  					@if ($user->profile_picture)
-												<img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" alt="Profile Picture" class="avatar rounded-circle me-2">
+												<img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" alt="Profile Picture" class="avatar img-fluid rounded-circle me-2">
 											@else
-												<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" alt="Profile Picture" class="avatar rounded-circle me-2">
+												<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" alt="Profile Picture" class="avatar img-fluid rounded-circle me-2">
 											@endif
 								<button type="button" class="btn btn-secondary timeline-create-post" data-bs-toggle="modal" data-bs-target="#createPost">Write something interesting</button>
 						  </div>
@@ -40,18 +40,18 @@
 									@foreach ($posts as $post)
 										<div class="d-flex align-items-start post-box">
 											@if ($post->user->profile_picture)
-													<img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="rounded-circle me-2" width="36" height="36">
+													<img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 												@else
-													<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle me-2" width="36" height="36">
+													<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 											@endif
 											<div class="flex-grow-1">
 												<small class="float-end text-navy">{{ $post->created_at->diffForHumans() }}</small>
 												<strong>{{ $post->user->name }}</strong><br>
 												<p>{{ $post->content }}</p>
 						
-												<a href="#" class="btn btn-sm btn-secondary mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="heart"></i> Like</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="heart"></i></span></a>
-												<a class="btn btn-sm btn-secondary mt-1 comment-toggle-btn"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="message-square"></i> Comment</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="message-square"></i></span></a>
-												<a href="#" class="btn btn-sm btn-secondary mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="share"></i> Repost</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="share"></i></span></a>
+												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="heart"></i> Like</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="heart"></i></span></a>
+												<a class="btn btn-sm btn-secondary mt-1  rounded comment-toggle-btn"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="message-square"></i> Comment</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="message-square"></i></span></a>
+												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="share"></i> Repost</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="share"></i></span></a>
 
 													<div class="comment-stats float-end">
 														 @if ($post->comments->count() > 0)
@@ -72,9 +72,9 @@
 																<div class="comment-item d-flex align-items-start mt-1">
 																	<a class="" href="#">
 																		@if ($comment->user->profile_picture)
-																			<img src="{{ asset('storage/' . $comment->user->profile_picture) }}" alt="{{ $comment->user->name }}'s Profile Picture" class="rounded-circle me-2" width="36" height="36">
+																			<img src="{{ asset('storage/' . $comment->user->profile_picture) }}" alt="{{ $comment->user->name }}'s Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 																		@else
-																			<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle me-2" width="36" height="36">
+																			<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 																		@endif	
 																	</a>
 																	<div class="flex-grow-1 comment-item-inner-box">
