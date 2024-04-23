@@ -47,12 +47,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-            // Generate OTP
-        $otp = mt_rand(100000, 999999);
-        // Store OTP in the user's record
-        $user->otp = $otp;
-        $user->save();
-
 
         // Dispatch the verification event
         $user->sendEmailVerificationNotification();         

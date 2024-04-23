@@ -9,7 +9,7 @@ use App\Http\Controllers\LearningResourcesController;
 use App\Http\Controllers\SchoolCornersController;
 use App\Http\Controllers\TbookeBlueboardController;
 
-Route::get('/', function () {return view('index'); });
+Route::get('/', function () {return view('auth.login'); });
 Route::get('/about', function () {return view('about'); });
 
 
