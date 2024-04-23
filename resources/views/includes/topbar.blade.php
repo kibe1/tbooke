@@ -83,7 +83,7 @@
 											@else
 												<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" alt="Profile Picture" class="avatar img-fluid rounded me-1">
 											@endif
-				<span class="text-dark">{{ Auth::user()->name }}</span>
+				<span class="text-dark">{{ Auth::user()->first_name }} {{ Auth::user()->surname }}</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="{{route('profile')}}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>

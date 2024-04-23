@@ -7,7 +7,9 @@
     @include('includes.topbar')
     {{-- Main Content --}}
     <main class="content">
-            <h1>Coming soon!!!</h1>
+        <div class="container-fluid p-0">
+            <h1 class="h3 mb-3">Coming soon</h1>
+        </div>
     </main>
     {{-- footer --}}
     @include('includes.footer')

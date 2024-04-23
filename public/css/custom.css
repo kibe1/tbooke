@@ -37,7 +37,7 @@ body, html {
   .btn {
     display: inline-block !important;
     padding: 10px 20px !important;
-    background-color: #ADD8E6 !important; 
+    background-color: #800000 !important; 
     color: #fff !important;
     text-decoration: none !important;
     border: none !important;
@@ -66,4 +66,7 @@ color: #fff !important;
    .welcome-tbooke-2 {
      background-color: #088484;
      color: #fff !important;
+   }
+   body {
+    overflow-x: hidden !important;
    }

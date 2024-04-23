@@ -8,7 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="css/style.css" rel="stylesheet" type="text/css" >
 	<title>Sign Up | Tbooke</title>
-
+	
 	<link href="static/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -35,11 +35,18 @@
 									   @method('post')
 				
 										<div class="mb-3">
-											<label class="form-label">Full name</label>
-											@error('name')
+											<label class="form-label">First Name</label>
+											@error('first_name')
 												<div class="text-danger">{{ $message }}</div>
 											@enderror
-											<input class="form-control form-control-lg @error('name') is-invalid @enderror" type="text" name="name" placeholder="Enter your name" value="{{ old('name') }}" />
+											<input class="form-control form-control-lg @error('first_name') is-invalid @enderror" type="text" name="first_name" placeholder="Enter your first name" value="{{ old('first_name') }}" />
+										</div>
+											<div class="mb-3">
+											<label class="form-label">Surname</label>
+											@error('surname')
+												<div class="text-danger">{{ $message }}</div>
+											@enderror
+											<input class="form-control form-control-lg @error('surname') is-invalid @enderror" type="text" name="surname" placeholder="Enter your surname" value="{{ old('surname') }}" />
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Email</label>

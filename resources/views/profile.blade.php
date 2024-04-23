@@ -42,7 +42,7 @@
 										@else
 											<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" alt="Profile Picture" class="img-fluid rounded-circle mb-2" width="128" height="128">
 										@endif
-									<h5 class="card-title mb-0">{{ Auth::user()->name }}</h5>
+									<h5 class="card-title mb-0">{{ Auth::user()->first_name }} {{ Auth::user()->surname }}</h5>
 									<div class="text-muted mb-2 capitalize">{{ Auth::user()->profile_type }}</div>
 
 									<div>

@@ -6,8 +6,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LearningResourcesController;
-use App\Http\Controllers\SchoolCornersController;
+use App\Http\Controllers\SchoolsCornerController;
 use App\Http\Controllers\TbookeBlueboardController;
+use App\Http\Controllers\TbookeLearningController;
+
 
 Route::get('/', function () {return view('auth.login'); });
 Route::get('/about', function () {return view('about'); });
@@ -28,8 +30,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/feed', [FeedController::class, 'feeds'])->name('feed');
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::get('/learning-resources', [LearningResourcesController::class, 'learningResource'])->name('learning-resources');
-    Route::get('/school-corners', [ SchoolCornersController::class, 'schoolCorner'])->name('school-corners');
+    Route::get('/schools-corner', [ SchoolsCornerController::class, 'schoolsCorner'])->name('schools-corner');
     Route::get('/tbooke-blueboard', [TbookeBlueboardController::class, 'tbookeBlueboard'])->name('tbooke-blueboard');
+    Route::get('/tbooke-learning', [TbookeLearningController::class, 'tbookeLearning'])->name('tbooke-learning');
 
 });
 

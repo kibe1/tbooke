@@ -129,11 +129,11 @@ h5#successModalLabel {
 }
 .about-h1 {color: #FFA500 !important;}
 .about-btn:hover{
-  background-color: #5ACFF3 !important; 
+  background-color: #800000 !important; 
   color: #fff !important;
 }
 .about-rows {
-  padding: 2rem 2.5rem;
+  padding: 2rem 1rem;
 }
 .about-card {
   margin-top: 35px;
@@ -195,4 +195,13 @@ h5#successModalLabel {
   .comment-item-inner-box {
       width: 100%; /* Fill the width */
   }
+  .profile_image_in_comment{
+    position: absolute;
+      left: 0.5rem !important;
+  }
 }
+.profile_image_in_comment{
+  position: absolute;
+    left: 4rem;
+}
+

@@ -17,7 +17,7 @@
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="{{route('feed')}}">
-              <i class="align-middle" data-feather="clock"></i> <span class="align-middle">Timeline</span>
+              <i class="align-middle" data-feather="clock"></i> <span class="align-middle">Posts</span>
             </a>
 					</li>
 

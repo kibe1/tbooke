@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SchoolCornersController extends Controller
+class SchoolsCornerController extends Controller
 {
     //
-    public function schoolCorner(Request $request)
+    public function schoolsCorner(Request $request)
     {
         // Your code logic here
         $user = Auth::user();
-        return view('school-corners', compact('user'));
+        return view('schools-corner', compact('user'));
     }
 }
