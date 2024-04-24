@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles; // Import the HasRoles trait
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasRoles;
-
+    use Notifiable;
+    
     protected $fillable = [
         'name', 'email', 'password', 'profile_type', 'profile_picture',
     ];

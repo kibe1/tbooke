@@ -37,4 +37,9 @@ class FeedController extends Controller
     
         return view('feed', compact('user', 'posts', 'comments'));
     }
+
+    public function learning (Request $request) {
+        $user = Auth::user();
+        return view ('learning-resources', compact('user'));
+    }
 }
