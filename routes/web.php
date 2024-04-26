@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LearningResourcesController;
 use App\Http\Controllers\SchoolCornersController;
 use App\Http\Controllers\TbookeBlueboardController;
+use App\Http\Controllers\TbookLearningController;
 
 Route::get('/', function () {return view('auth.login'); });
 Route::get('/about', function () {return view('about'); });
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/learning-resources', [LearningResourcesController::class, 'learningResource'])->name('learning-resources');
     Route::get('/school-corners', [ SchoolCornersController::class, 'schoolCorner'])->name('school-corners');
     Route::get('/tbooke-blueboard', [TbookeBlueboardController::class, 'tbookeBlueboard'])->name('tbooke-blueboard');
+    Route::get('/tbooke-learning', [TbookLearningController::class, 'tbookeLearning'])->name('tbooke-learning');
 
 });
 

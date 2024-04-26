@@ -1,26 +1,4 @@
-@include('includes.header')
-	
-	{{-- Topbar --}}
-	<div class="main">
-			{{-- Main Content --}}
-			<main class="content" style="padding-top: 1rem !important;">
-               <div class="container-fluid p-0">
-                        <div class="mb-3">
-                            <a href="/">
-                                <img src="/images/tbooke-logo.png" class="logo" alt="">
-                            </a>
-                            <div style="float: right" class="buttons">
-                                <a href="/login" class="btn about-btn">Login</a>
-                                <a href="/register" class="btn about-btn">Register</a>
-                            </div>
-                        </div>
-                        <div class="row about-rows">
-						    <div class="col-12 col-lg-7 about">
-                                <h1 class="h3 d-inline align-middle about-h1">About Tbooke</h1>
-                                <p>Tbooke media introduces a new era of professional engagement, networking and learning tailored for the education sector.</p>
-                                <p>It stands as the premier platform for educational enthusiasts, bridging the gap often found in social media platforms with meaningful conversations that are frequently lost amidst the noise</p>
-                                <p>Tbook is where education intersects with social networking, challenging and moving beyond the negative perceptions typically associated with mainstream social media platforms. It promises to be a fertile ground for high quality content designed to cater to the needs of educators and learners of all ages.</p>
-                            </div>
+
                             <div class="col-12 col-lg-5">
                                 <div class="card about-card">
 								    <img class="card-img-top about-img" src="images/about.jpg" alt="about-tbooke">

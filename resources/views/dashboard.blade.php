@@ -12,7 +12,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <a class="dashboard-cards-a" href="{{route('feed')}}">
+                <a class="dashboard-cards-a" href="{{route('tbooke-learning')}}">
                     <div class="card">
                         <div class="card-header learning">
                             <h5 class="card-title mb-3 card-title-dashboard">Tbooke Learning</h5>
