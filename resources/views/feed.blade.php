@@ -63,7 +63,7 @@
 															<form id="createCommentForm{{ $post->id }}">
 															@csrf
 															<input type="hidden" name="post_id" value="{{ $post->id }}">
-															<div class="mb-3">
+															<div class="mb-3 mt-3">
 																<textarea class="form-control comment-area" name="content" id="commentContent{{ $post->id }}" rows="2" placeholder="Post your comment"></textarea>
 															</div>
 														</form>

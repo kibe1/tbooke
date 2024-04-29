@@ -168,7 +168,7 @@ h5#successModalLabel {
   .timeline-create-post{
     font-size: 12px !important;
   }
-  .post-box,  .card-body {
+  .post-box .comment-box {
     padding: 0 !important;
   }
   .form-control.comment-area {
@@ -197,7 +197,7 @@ h5#successModalLabel {
   }
   .profile_image_in_comment{
     position: absolute;
-      left: 0.5rem !important;
+      left: 1.6rem !important;
   }
 }
 .profile_image_in_comment{
@@ -205,3 +205,8 @@ h5#successModalLabel {
     left: 4rem;
 }
 
+.font-medium.text-sm.text-green-600.mb-4 {color: #2cb92c;font-size: 17px;}
+ul.text-sm.text-red-600.space-y-1.mt-2 {
+  color: #f77474;
+  font-size: 14px;
+}

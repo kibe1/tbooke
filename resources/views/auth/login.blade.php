@@ -60,6 +60,9 @@
 										<div class="d-grid gap-2 mt-3">
 											<input type="submit" class="btn btn-lg btn-primary" value="Submit">
 										</div>
+										<div class="text-center mb-3 mt-3 forgot-pass">
+											<a href="{{route('password.request')}}">Forgot Password</a>
+										</div>
 									</form>
 								</div>
 							</div>

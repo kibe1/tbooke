@@ -45,13 +45,13 @@
 									<h5 class="card-title mb-0">{{ Auth::user()->first_name }} {{ Auth::user()->surname }}</h5>
 									<div class="text-muted mb-2 capitalize">{{ Auth::user()->profile_type }}</div>
 
-									<div>
-										<a class="btn btn-primary btn-sm" href="#">Follow</a>
-										<a class="btn btn-primary btn-sm" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Message</a>
+									<div class="mb-3">
+										<a class="btn btn-primary btn-sm" href="#"><i class="feather-sm" data-feather="user-plus"></i> Connect</a>
+										<a class="btn btn-primary btn-sm" href="#"><i class="feather-sm" data-feather="message-square"></i> Message</a>
 									</div>
 								</div>
                                 	<hr class="my-0">
-								<div class="card-body">
+								<div class="card-body ml-3">
 									<h5 class="h6 card-title">About Me</h5>
                                      @if ($profileDetails && $profileDetails->about)
 											<p>{{ $profileDetails->about }}</p>
@@ -110,22 +110,57 @@
 								</div>
 								<div class="card-body h-100">
 									@foreach ($posts as $post)
-										<div class="d-flex align-items-start">
-											@if ($user->profile_picture)
-												<img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="rounded-circle me-2" width="36" height="36">
-											@else
-												<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle me-2" width="36" height="36">
+										<div class="d-flex align-items-start post-box">
+											@if ($post->user->profile_picture)
+													<img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
+												@else
+													<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 											@endif
 											<div class="flex-grow-1">
 												<small class="float-end text-navy">{{ $post->created_at->diffForHumans() }}</small>
-												<strong>{{ $post->user->name }}</strong><br>
+												<strong>{{ $post->user->first_name }} {{ $post->user->surname }}</strong><br>
 												<p>{{ $post->content }}</p>
-												<a href="#" class="btn btn-sm btn-secondary mt-1"><i class="feather-sm" data-feather="heart"></i> Like</a> 
-												<a href="#" class="btn btn-sm btn-secondary mt-1"><i class="feather-sm" data-feather="message-square"></i> Comment</a>
-												<a href="#" class="btn btn-sm btn-secondary mt-1"><i class="feather-sm" data-feather="share"></i> Share</a>
+						
+												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="heart"></i> Like</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="heart"></i></span></a>
+												<a class="btn btn-sm btn-secondary mt-1  rounded comment-toggle-btn"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="message-square"></i> Comment</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="message-square"></i></span></a>
+												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="share"></i> Repost</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="share"></i></span></a>
+
+													<div class="comment-stats float-end">
+														 @if ($post->comments->count() > 0)
+															<a class="text-muted comment-toggle-btn" href="#">{{ $post->comments->count() }} Comments</a>
+														@endif
+													</div>
 												<br>
-												<small class="text-muted">{{ $post->created_at->format('M d, Y h:i A') }}</small>
-												<hr>
+													<div class="card-body comment-box">
+															<form id="createCommentForm{{ $post->id }}">
+															@csrf
+															<input type="hidden" name="post_id" value="{{ $post->id }}">
+															<div class="mb-3 mt-3">
+																<textarea class="form-control comment-area" name="content" id="commentContent{{ $post->id }}" rows="2" placeholder="Post your comment"></textarea>
+															</div>
+														</form>
+														<button type="button" id="submitCommentBtn{{ $post->id }}" class="btn btn-primary submit-comment-btn">Submit</button>
+														 	@foreach ($post->comments as $comment)
+																<div class="comment-item d-flex align-items-start mt-1">
+																	<div class="profile_image_in_comment">
+																		<a class="#" href="#">
+																		@if ($comment->user->profile_picture)
+																			<img src="{{ asset('storage/' . $comment->user->profile_picture) }}" alt="{{ $comment->user->first_name }}'s Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
+																		@else
+																			<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
+																		@endif	
+																		</a>
+																	</div>
+																	<div class="flex-grow-1 comment-item-inner-box">
+																		<small class="float-end text-navy">{{ $comment->created_at->diffForHumans() }}</small>
+																		<div class="text-muted p-2 mt-1">
+																			<div><strong>{{ $comment->user->first_name }} {{ $comment->user->surname }}</strong></div>
+																			<div>{{ $comment->content }}</div>
+																		</div>
+																	</div>
+																</div>
+															@endforeach
+													</div>
 											</div>
 										</div>
 									@endforeach
