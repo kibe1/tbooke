@@ -1,3 +1,5 @@
+//creating a post
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('createPostForm');
     const submitBtn = document.getElementById('submitPostBtn');

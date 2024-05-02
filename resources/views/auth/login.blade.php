@@ -22,22 +22,21 @@
           <div class="d-table-cell align-middle">
               <h1>Welcome to Tbooke</h1>
               <p class="home-p" >Tbooke.net is more than just a platform,it’s a community where education professionals, institutions and learners share, connect and grow together all while enjoying content that’s educational and entertaining</p>
-              <a href="/about" class="btn mb-4">Learn More</a>
-			  <br>
+              <a href="/about" class="btn">Learn More</a>
           </div>
       </div>
 				<div class="col-sm-8 col-md-6 col-lg-6 col-xl-5 mx-auto d-table welcome-tbooke-2">
 					<div class="d-table-cell align-middle">
+						<div class="text-center mt-4">
+							<p class="lead">
+								Sign in to your account to continue
+							</p>
+						</div>
+
 						<div class="card">
 							<div class="card-body">
 								<div class="m-sm-3">
 									<form method="POST" action="{{route('login')}}">
-										<div class="text-center mt-4">
-											<p class="lead">
-												Sign in to your account to continue
-											</p>
-										</div>
-				
 									 @csrf
 									 @method('post')
 
@@ -61,13 +60,15 @@
 										<div class="d-grid gap-2 mt-3">
 											<input type="submit" class="btn btn-lg btn-primary" value="Submit">
 										</div>
-										<br>
-										<div class="text-center mb-3">
-											Don't have an account? <a class="text-dark" href="{{route('register')}}">Sign up</a>
+										<div class="text-center mb-3 mt-3 forgot-pass">
+											<a href="{{route('password.request')}}">Forgot Password</a>
 										</div>
 									</form>
 								</div>
 							</div>
+						</div>
+						<div class="text-center mb-3">
+							Don't have an account? <a href="{{route('register')}}">Sign up</a>
 						</div>
 					</div>
 				</div>

@@ -14,8 +14,6 @@ class FeedController extends Controller
     {
         $user = Auth::user();
 
-        $user = Auth::user();
-
         // Fetch all posts with their comments, ordered by latest post and comment
         $posts = Post::with(['comments' => function ($query) {
                 $query->orderBy('created_at', 'desc'); // Order comments by latest

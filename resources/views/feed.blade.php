@@ -46,7 +46,7 @@
 											@endif
 											<div class="flex-grow-1">
 												<small class="float-end text-navy">{{ $post->created_at->diffForHumans() }}</small>
-												<strong>{{ $post->user->name }}</strong><br>
+												<strong>{{ $post->user->first_name }} {{ $post->user->surname }}</strong><br>
 												<p>{{ $post->content }}</p>
 						
 												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="heart"></i> Like</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="heart"></i></span></a>
@@ -63,24 +63,27 @@
 															<form id="createCommentForm{{ $post->id }}">
 															@csrf
 															<input type="hidden" name="post_id" value="{{ $post->id }}">
-															<div class="mb-3">
+															<div class="mb-3 mt-3">
 																<textarea class="form-control comment-area" name="content" id="commentContent{{ $post->id }}" rows="2" placeholder="Post your comment"></textarea>
 															</div>
 														</form>
 														<button type="button" id="submitCommentBtn{{ $post->id }}" class="btn btn-primary submit-comment-btn">Submit</button>
 														 	@foreach ($post->comments as $comment)
 																<div class="comment-item d-flex align-items-start mt-1">
-																	<a class="" href="#">
+																	<div class="profile_image_in_comment">
+																		<a class="#" href="#">
 																		@if ($comment->user->profile_picture)
-																			<img src="{{ asset('storage/' . $comment->user->profile_picture) }}" alt="{{ $comment->user->name }}'s Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
+																			<img src="{{ asset('storage/' . $comment->user->profile_picture) }}" alt="{{ $comment->user->first_name }}'s Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 																		@else
 																			<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 																		@endif	
-																	</a>
+																		</a>
+																	</div>
 																	<div class="flex-grow-1 comment-item-inner-box">
 																		<small class="float-end text-navy">{{ $comment->created_at->diffForHumans() }}</small>
 																		<div class="text-muted p-2 mt-1">
-																			<strong>{{ $comment->user->name }}</strong> <br>	{{ $comment->content }}
+																			<div><strong>{{ $comment->user->first_name }} {{ $comment->user->surname }}</strong></div>
+																			<div>{{ $comment->content }}</div>
 																		</div>
 																	</div>
 																</div>

@@ -6,6 +6,12 @@
         </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
+						{{-- Search Input Field --}}
+						<li class="nav-item">
+							<form class="d-flex">
+								<input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
+								<button class="btn btn-outline-success rounded-pill" type="submit">Search</button>
+							</form>
 						 {{-- <li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 								<div class="position-relative">
@@ -83,7 +89,7 @@
 											@else
 												<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" alt="Profile Picture" class="avatar img-fluid rounded me-1">
 											@endif
-				<span class="text-dark">{{ Auth::user()->name }}</span>
+				<span class="text-dark">{{ Auth::user()->first_name }} {{ Auth::user()->surname }}</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="{{route('profile')}}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>

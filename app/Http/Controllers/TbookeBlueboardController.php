@@ -12,6 +12,6 @@ class TbookeBlueboardController extends Controller
     {
         // Your code logic here
         $user = Auth::user();
-        return view('tbooke-blueboard', compact('user'));
+        return view('learning-resources', compact('user'));
     }
 }

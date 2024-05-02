@@ -29,7 +29,7 @@
 <body>
     <div class="container">
         <div class="mb-4 text-sm text-gray-600">
-            Thanks for signing up for <b>Tbooke</b>! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
+            Thank you for signing up on <b>Tbooke</b>! Please click on the link sent to your email to verify your account
         </div>
 
         @if (session('status') == 'verification-link-sent')
