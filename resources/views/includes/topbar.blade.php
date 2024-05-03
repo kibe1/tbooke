@@ -6,12 +6,15 @@
         </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
+<<<<<<< HEAD
 						{{-- Search Input Field --}}
 						<li class="nav-item">
 							<form class="d-flex">
 								<input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
 								<button class="btn btn-outline-success rounded-pill" type="submit">Search</button>
 							</form>
+=======
+>>>>>>> fc9eae639b6d911b123dbd9d06ddb096726df666
 						 {{-- <li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 								<div class="position-relative">

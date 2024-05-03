@@ -8,6 +8,7 @@
     {{-- Main Content --}}
     <main class="content">
         <div class="container-fluid p-0">
+<<<<<<< HEAD
             <h1 class="h3 mb-3">Tbooke Learning Resources</h1>
         </div>
     <style>
@@ -144,6 +145,10 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+=======
+            <h1 class="h3 mb-3">Coming soon</h1>
+        </div>
+>>>>>>> fc9eae639b6d911b123dbd9d06ddb096726df666
     </main>
     {{-- footer --}}
     @include('includes.footer')
