@@ -1,27 +1,26 @@
 
 
-	<nav class="navbar navbar-expand navbar-light navbar-bg">
+<nav class="navbar navbar-expand bg-body-tertiary">
 		<a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
         </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
-<<<<<<< HEAD
 						{{-- Search Input Field --}}
 						<li class="nav-item">
 							<form class="d-flex">
-								<input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
-								<button class="btn btn-outline-success rounded-pill" type="submit">Search</button>
+								<input class="form-control me-2 rounded border-0" type="search" placeholder="Type here..." aria-label="Search">
+								<button class="btn btn-success rounded" type="submit" style="background-color: #008080; border-color: #008080;">Search</button>
 							</form>
-=======
->>>>>>> fc9eae639b6d911b123dbd9d06ddb096726df666
-						 {{-- <li class="nav-item dropdown">
+							
+						  <li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 								<div class="position-relative">
 									<i class="align-middle" data-feather="bell"></i>
-									<span class="indicator">4</span>
+									{{-- <span class="indicator"></span> --}}
 								</div>
 							</a>
+{{--
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
 								<div class="dropdown-menu-header">
 									4 New Notifications

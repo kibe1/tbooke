@@ -9,6 +9,10 @@ use App\Http\Controllers\LearningResourcesController;
 use App\Http\Controllers\SchoolsCornerController;
 use App\Http\Controllers\TbookeBlueboardController;
 use App\Http\Controllers\TbookeLearningController;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\ShareController;
 
 
 Route::get('/', function () {return view('auth.login'); });
@@ -33,6 +37,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/schools-corner', [ SchoolsCornerController::class, 'schoolsCorner'])->name('schools-corner');
     Route::get('/tbooke-blueboard', [TbookeBlueboardController::class, 'tbookeBlueboard'])->name('tbooke-blueboard');
     Route::get('/tbooke-learning', [TbookeLearningController::class, 'tbookeLearning'])->name('tbooke-learning');
+    Route::post('/save-resource', [ResourceController::class, 'store'])->name('save-resource');
+    Route::get('/resources', [ResourceController::class, 'index'])->name('resources.index');
+    Route::get('/learning-resources', [ResourceController::class, 'index'])->name('learning-resources');
+    Route::post('/submit-form', [FormController::class, 'store'])->name('submit-form');
+    Route::get('/submissions', [FormController::class, 'submissions'])->name('submissions');
+    Route::get('submission/success/{submission}', [FormController::class, 'showSuccess'])->name('submission.success');
+
+
+    Route::post('/like/{resource}', [LikeController::class,'like'])->name('like');
+    Route::post('/comment/{resource}',[CommentController::class,'comment'])->name('comment');
+    Route::post('/share/{resource}', [ShareController::class,'share'])->name('share');
 
 });
 
