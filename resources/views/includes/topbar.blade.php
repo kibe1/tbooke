@@ -8,11 +8,6 @@
 					<ul class="navbar-nav navbar-align">
 						{{-- Search Input Field --}}
 						<li class="nav-item">
-							<form class="d-flex">
-								<input class="form-control me-2 rounded border-0" type="search" placeholder="Type here..." aria-label="Search">
-								<button class="btn btn-success rounded" type="submit" style="background-color: #008080; border-color: #008080;">Search</button>
-							</form>
-							
 						  <li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 								<div class="position-relative">

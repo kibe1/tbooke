@@ -13,28 +13,16 @@ class ResourceController extends Controller
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'institution' => 'required|string',
+            'location' => 'required|string',
             'category' => 'required|string',
-            'subject' => 'required|string',
-            'grade' => 'required|string',
-            'name' => 'required|string',
-            'phone' => 'required|string',
             'file' => 'nullable|file',
-            'accessType' => 'required|string',
-            'visibility' => 'required|string',
             'about' => 'required|string',
-            'price' => 'nullable|numeric',
-            'discount' => 'nullable|numeric',
         ]);
 
         // Create a new resource instance and fill it with validated data
         $resource = new Resource();
-        $resource->institution = $validatedData['institution'];
+        $resource->location = $validatedData['location'];
         $resource->category = $validatedData['category'];
-        $resource->subject = $validatedData['subject'];
-        $resource->grade = $validatedData['grade'];
-        $resource->name = $validatedData['name'];
-        $resource->phone = $validatedData['phone'];
 
         // Handle file upload if applicable
         if ($request->hasFile('file')) {
@@ -48,18 +36,6 @@ class ResourceController extends Controller
             // Set the file attribute to the filename
             $resource->file = $fileName;
         }
-
-        // Assign pricing and discount values if provided
-        if (isset($validatedData['price'])) {
-            $resource->price = $validatedData['price'];
-        }
-
-        if (isset($validatedData['discount'])) {
-            $resource->discount = $validatedData['discount'];
-        }
-
-        $resource->access_type = $validatedData['accessType'];
-        $resource->visibility = $validatedData['visibility'];
         $resource->about = $validatedData['about'];
 
         // Save the resource to the database

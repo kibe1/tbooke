@@ -11,8 +11,7 @@ use App\Http\Controllers\TbookeBlueboardController;
 use App\Http\Controllers\TbookeLearningController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\FormController;
-use App\Http\Controllers\LikeController;
-use App\Http\Controllers\ShareController;
+use App\Http\Controllers\AnnouncementController;
 
 
 Route::get('/', function () {return view('auth.login'); });
@@ -43,12 +42,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/submit-form', [FormController::class, 'store'])->name('submit-form');
     Route::get('/submissions', [FormController::class, 'submissions'])->name('submissions');
     Route::get('submission/success/{submission}', [FormController::class, 'showSuccess'])->name('submission.success');
-
-
-    Route::post('/like/{resource}', [LikeController::class,'like'])->name('like');
-    Route::post('/comment/{resource}',[CommentController::class,'comment'])->name('comment');
-    Route::post('/share/{resource}', [ShareController::class,'share'])->name('share');
-
+    Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+    Route::get('/tbooke-blueboard', [AnnouncementController::class, 'index'])->name('tbooke-blueboard');
 });
 
 
