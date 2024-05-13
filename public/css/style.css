@@ -52,7 +52,7 @@ body, html {
   padding-top: 5px !important;
 }
 
-#successModal{
+#successModal, #successModalApplication{
   transform: translate(0, -150px);
 }
 
@@ -209,4 +209,101 @@ h5#successModalLabel {
 ul.text-sm.text-red-600.space-y-1.mt-2 {
   color: #f77474;
   font-size: 14px;
+}
+.btn-tbooke {
+  background-color: #800000 !important;
+  color: #fff !important;
+}
+.about-card-inner {
+  padding: 0 0 4.6rem 1rem !important;
+}
+button.btn.btn-tbooke.mb-2.mb-md-0.me-md-2.tbooke-creator-btn {
+  background-color: goldenrod !important;
+  cursor: unset !important;
+}
+.content-creation-form input, .tox.tox-tinymce.tox-edit-focus, .tox-tinymce {
+  width: 95% !important;
+}
+.content-creation-form {
+  padding-left: 2.1rem !important;
+}
+.content-creation-form { padding-left: 2rem;}
+.tox-statusbar__branding svg {
+ display: none !important;
+}
+.tox-statusbar__path-item {
+  display: none !important;
+}
+.card-body.tbooke-content {
+  padding-top: 0;
+}
+.card-img-top.content-thumbnail {
+  height: 230px;
+}
+.content-title {
+  font-weight: 700;
+  color: #333 !important;
+  font-size: 1.1rem !important;
+}
+.content {
+  width: unset !important;
+  max-width: unset !important;
+}
+
+.tbooke-creator-btn-application {
+  text-align: end !important;
+}
+
+/* Custom CSS */
+@media (max-width: 767.98px) {
+  .tbooke-creator-btn-application {
+    text-align: left !important;
+    margin-top: 1rem !important;
+  }
+  .content {
+    padding: 1rem 0.5rem .75rem !important;
+  }
+}
+.content-title {
+  text-decoration: none !important;
+}
+
+@media (min-width: 992px) {
+  .content {
+      padding: 2rem 2rem 1.5rem !important;
+  }
+}
+
+.sidebar-content.js-simplebar {
+  width: 200px;
+}
+
+.wrapper {
+  background: unset !important;
+}
+
+.start-learning-button {
+  background-color: #ff007f;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+}
+.author-category {
+  padding-bottom: 0.4rem !important;
+}
+.content-stats {
+  margin-top: .4rem;
+}
+.stat-link {
+  color: #000000de !important;
+  pointer-events: none;
+}
+
+.content-stats-icon {
+  margin-top: 3.2px;
+  position: absolute;
+}
+
+.content-stats-span {
+  padding-left: 20px;
 }

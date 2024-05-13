@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
+use App\Models\Creator;
 use Alert;
 
 class ProfileController extends Controller
@@ -40,13 +41,21 @@ class ProfileController extends Controller
         }
 
         // Get the user's posts
-        $posts = $user->posts ?? [];
+        $posts = $user->posts()->orderBy('created_at', 'desc')->get();
         // dd($posts);
+        
+        $userIsCreator = Creator::where('user_id', $user->id)->exists();
+        $userIsTeacher = $user->profile_type === 'teacher';
+        
+
+        // dd($userIsStudent);
 
         return view('profile', [
             'user' => $user,
             'profileDetails' => $profileDetails,
             'posts' => $posts,
+            'userIsCreator' => $userIsCreator,
+            'userIsTeacher' => $userIsTeacher,
         ]);
     }
 
@@ -99,7 +108,8 @@ class ProfileController extends Controller
 
         // Update user's name and email if provided
         if ($request->filled('name')) {
-            $user->name = $request->input('name');
+            $user->first_name = $request->input('first_name');
+            $user->surname = $request->input('surname');
             $user->save();
         }
         if ($request->filled('email')) {

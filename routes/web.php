@@ -9,14 +9,16 @@ use App\Http\Controllers\LearningResourcesController;
 use App\Http\Controllers\SchoolsCornerController;
 use App\Http\Controllers\TbookeBlueboardController;
 use App\Http\Controllers\TbookeLearningController;
+use App\Http\Controllers\CreatorController;
+use App\Http\Controllers\ContentController;
 
 
-Route::get('/', function () {return view('auth.login'); });
+Route::get('/', function () {
+    if (auth()->check()) {return redirect('/dashboard');  }
+    return view('auth.login');
+});
+
 Route::get('/about', function () {return view('about'); });
-
-
-
-
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -33,6 +35,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/schools-corner', [ SchoolsCornerController::class, 'schoolsCorner'])->name('schools-corner');
     Route::get('/tbooke-blueboard', [TbookeBlueboardController::class, 'tbookeBlueboard'])->name('tbooke-blueboard');
     Route::get('/tbooke-learning', [TbookeLearningController::class, 'tbookeLearning'])->name('tbooke-learning');
+    Route::post('/creator', [CreatorController::class, 'store'])->name('creator.store');
+    Route::post('/tbooke-learning', [TbookeLearningController::class, 'store'])->name('tbooke-learning.store');
+    Route::get('/tbooke-learning/create', [TbookeLearningController::class, 'index'])->name('tbooke-learning.create');
+    Route::get('/tbooke-learning/{slug}', [ContentController::class, 'show'])->name('content.show');
 
 });
 

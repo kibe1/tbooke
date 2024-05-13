@@ -26,10 +26,11 @@
 				</div>
 	</footer>
 </div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-	<script src="{{ asset('/js/jquery.min.js') }}"></script>
-	<script src="{{ asset('/js/select2.min.js') }}"></script>
-	<script src="{{ asset('/js/select2.js') }}"></script>
+	<script src="/docsupport/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script src="/docsupport/chosen.jquery.js" type="text/javascript"></script>
+	<script src="/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/docsupport/init.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.tiny.cloud/1/omzlvo1v34uqcwchvwg1su29904hdb86emi5sr5agotnloym/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src="{{ asset('/js/custom.js') }}"></script>
 	<script src="{{ asset('/static/js/app.js') }}"></script>
 </body>

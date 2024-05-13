@@ -30,9 +30,22 @@
 											<label for="profile_picture" class="form-label">Profile Picture</label>
 											<input id="profile_picture" name="profile_picture" type="file" class="form-control mb-3">
 										</div>
-										<input value="{{ Auth::user()->name }}" name="name" type="text" class="form-control mb-3" />
-										<input value="{{ Auth::user()->profile_type }}" type="text" class="form-control mb-3 capitalize" disabled />
-										<input value="{{ Auth::user()->email }}" name="email" type="text" class="form-control mb-2" />
+										<div class="row">
+											<div class="col-md-6">
+												<input value="{{ Auth::user()->first_name }}" name="first_name" type="text" class="form-control mb-3" />
+											</div>
+											<div class="col-md-6">
+												<input value="{{ Auth::user()->surname }}" name="surname" type="text" class="form-control mb-3" />
+											</div>
+										</div>
+											<div class="row">
+												<div class="col-md-6">
+													<input value="{{ Auth::user()->profile_type }}" type="text" class="form-control mb-3 capitalize" disabled />
+												</div>
+												<div class="col-md-6">
+													<input value="{{ Auth::user()->email }}" name="email" type="text" class="form-control mb-2" />
+												</div>
+											</div>
 									</div>
 								</div>
 								<div class="card-body">
@@ -54,8 +67,8 @@
 								<div class="card-header">
 									<h5 class="h6 card-title">My Subjects</h5>
 								</div>
-								<div class="card-body">
-									<select name="user_subjects[]" class="form-select mb-3 subjects" multiple="multiple" id="user_subjects" >
+								<div class="about-card-inner">
+									<select name="user_subjects[]" data-placeholder="Select your subjects" multiple class="chosen-select-width form-select" tabindex="16">
 										<option value="Geography" @if(in_array('Geography', $userSubjects)) selected @endif>Geography</option>
 										<option value="Mathematics" @if(in_array('Mathematics', $userSubjects)) selected @endif>Mathematics</option>
 										<option value="Business" @if(in_array('Business', $userSubjects)) selected @endif>Business</option>
@@ -65,6 +78,7 @@
 							</div>
 						</div>
 					</div>
+					
 				<div class="row">
 						
 						<div class="col-md-6">
@@ -72,8 +86,8 @@
 								<div class="card-header">
 									<h5 class="h6 card-title">Favorite Topics</h5>
 								</div>
-								<div class="card-body">
-									<select name="favorite_topics[]" class="form-select mb-3 favorite-topics" multiple="multiple" id="favorite_topics">
+								<div class="about-card-inner">
+									<select name="favorite_topics[]" data-placeholder="Select your favorite topics" multiple class="chosen-select-width form-select" tabindex="16">
 											<option value="Algebra" @if(in_array('Algebra', $favoriteTopics)) selected @endif>Algebra</option>
     										<option value="Calculus" @if(in_array('Calculus', $favoriteTopics)) selected @endif>Calculus</option>
     										<option value="Marketing" @if(in_array('Marketing', $favoriteTopics)) selected @endif>Marketing</option>

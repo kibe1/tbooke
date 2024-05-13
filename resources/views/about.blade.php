@@ -47,7 +47,7 @@
                                                 Learning materials and media available for users sorted by grade and age
                                             </li>
                                             <li>
-                                                Learning can be charged a premium subscription for access
+                                                Subscribe to access more premium learning content
                                             </li>
                                             <li>
                                                 LIVE learning on school content

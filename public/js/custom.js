@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Show the success modal
                     $('#successModal').modal('show');
+
+                    // Close the success modal after 10 seconds
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000); 
                 } else {
                     throw new Error('Failed to create post');
                 }
@@ -34,6 +39,51 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+//Applying to become a creator
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('creatorModeForm');
+    const submitBtn = document.getElementById('submitRequestBtn');
+
+    submitBtn.addEventListener('click', function () {
+        // Create a FormData object from the form
+        const formData = new FormData(form);
+
+        // Send a POST request using AJAX
+        fetch(creatorApplicationRoute, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Close the modal after successful submission
+                    $('#creatorMode').modal('hide');
+
+                    // Show the success modal
+                    $('#successModalApplication').modal('show');
+
+                    setTimeout(function () {
+
+                        $('#successModalApplication').modal('hide');
+                        
+                    }, 2000);
+
+                } else {
+                    throw new Error('Application failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Application failed');
+            });
+    });
+});
+
+
 $(document).ready(function () {
     $('#successModal').on('hidden.bs.modal', function () {
         // Remove the modal backdrop
@@ -41,6 +91,20 @@ $(document).ready(function () {
 
         // Reset the form after modal is closed
         var form = document.getElementById('createPostForm');
+        form.reset();
+
+         // Refresh the page after dismissing the success modal
+         location.reload();
+    });
+})
+
+$(document).ready(function () {
+    $('#successModalApplication').on('hidden.bs.modal', function () {
+        // Remove the modal backdrop
+        $('.modal-backdrop').remove();
+
+        // Reset the form after modal is closed
+        var form = document.getElementById('creatorModeForm');
         form.reset();
 
          // Refresh the page after dismissing the success modal
@@ -99,3 +163,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+//textarea
+    tinymce.init({
+        selector: '.tinymce-textarea', // Use a class for the text area you want to convert
+        plugins: 'advlist autolink lists link image charmap print preview anchor',
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        menubar: false,
+    });
+

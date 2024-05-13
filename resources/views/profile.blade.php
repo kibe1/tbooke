@@ -19,17 +19,40 @@
 								</div>
 							</div>
 						</div>
-						
-				<div class="container-fluid p-0">
+						<!-- Success Modal -->
+						<div class="modal fade" id="successModalApplication" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true"  data-bs-keyboard="true">
+							<div class="modal-dialog modal-sm modal-dialog-centered position-absolute end-0">
+								<div class="modal-content bg-white">
+									<div class="modal-header border-0">
+										<h5 class="modal-title text-success" id="successModalLabel">
+											Application done successfully
+										</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+								</div>
+							</div>
+						</div>
 
+
+				<div class="container-fluid p-0">
+				
 					<div class="mb-3">
-					    <div class="row mb-3">
-						  <div class="col-md-12 d-flex justify-content-between align-items-center">
-						  		<h1 class="h3 d-inline align-middle">Profile</h1>
-								<a href="{{route('profile.edit')}}" class="btn btn-primary">Edit Profile</a>
-						  </div>
+						<div class="row mb-3">
+							<div class="col-md-6 d-flex justify-content-start align-items-center">
+								<h1 class="h3 d-inline align-middle">Profile</h1>
+								<a href="{{ route('profile.edit') }}" class="btn btn-primary ms-2">Edit Profile</a>
+							</div>
+
+							<div class="col-md-6 tbooke-creator-btn-application">
+								@if ($userIsCreator)
+									<button type="button" class="btn btn-tbooke mb-2 mb-md-0 me-md-2 tbooke-creator-btn">Tbooke Creator</button>
+								@elseif($user->profile_type !== 'student')
+									<button type="button" class="btn btn-tbooke mb-2 mb-md-0 me-md-2" data-bs-toggle="modal" data-bs-target="#creatorMode">Become a Tbooke Creator</button>
+								@endif
+							</div>
 						</div>
 					</div>
+
 					<div class="row">
 						<div class="col-md-5 col-xl-5">
 							<div class="card mb-3">
@@ -106,10 +129,12 @@
 						   <div class="card" id="activityFeed">
 								<div class="card-header d-flex justify-content-between align-items-center">
 									<h5 class="card-title mb-0">Activities</h5>
-									<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createPost">Create Post</button>
 								</div>
 								<div class="card-body h-100">
-									@foreach ($posts as $post)
+									@if ($posts->isEmpty())
+        							 <p>You do not have any activities.</p>
+									@else
+										@foreach ($posts as $post)
 										<div class="d-flex align-items-start post-box">
 											@if ($post->user->profile_picture)
 													<img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
@@ -130,7 +155,7 @@
 															<a class="text-muted comment-toggle-btn" href="#">{{ $post->comments->count() }} Comments</a>
 														@endif
 													</div>
-												<br>
+													<br>
 													<div class="card-body comment-box">
 															<form id="createCommentForm{{ $post->id }}">
 															@csrf
@@ -163,10 +188,11 @@
 													</div>
 											</div>
 										</div>
-									@endforeach
+										@endforeach
+									@endif
 								</div>
 							</div>
-									<!-- Modal -->
+									<!-- Create Post Modal -->
 										<div class="modal fade" id="createPost" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 											<div class="modal-dialog">
 												<div class="modal-content">
@@ -190,13 +216,60 @@
 												</div>
 											</div>
 										</div>
+
+										<!-- Become a creator -->
+										<div class="modal fade" id="creatorMode" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="">Become a Creator</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">
+														<form id="creatorModeForm">
+															@csrf
+															<div class="mb-3">
+          														<select data-placeholder="Which subjects do you consider yoursel an expert?" name="creator_subjects[]" multiple class="chosen-select-width form-select" tabindex="16">
+																	<option value="Geography">Geography</option>
+																	<option value="Mathemathics">Mathemathics</option>
+																	<option value="English">English</option>
+																	<option value="Kiswahili">Kiswahili</option>
+																	<option value="Business">Business</option>
+																</select>
+																{{-- <input class="form-control" type="text" name="creator_subjects" value="" placeholder="Which subjects do you consider yoursel an expert?"> --}}
+															</div>
+															<div class="mb-3">
+          														<select data-placeholder="Which learning grades will be your main target?" name="creator_expertise[]" multiple class="chosen-select-width form-select" tabindex="16">
+																	<option value="pre_school">Pre School</option>
+																	<option value="grade_1_6">Grades 1-6</option>
+																	<option value="cbc_content">CBC Content</option>
+																	<option value="jss">Junior Secondary School</option>
+																	<option value="high_school">High School</option>
+																</select>
+															</div>
+															<div class="mb-3">
+																<textarea class="form-control"  name="the_why" rows="7" placeholder="Why do you want to become a Tbooke creator"></textarea>
+															</div>
+														</form>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+														<button type="button" class="btn btn-primary" id="submitRequestBtn">Submit</button>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										
 									</div>
 							</div>
 					</div>
 			</main>
 				<script>
 					const postStoreRoute = "{{ route('posts.store') }}";
+					const creatorApplicationRoute = "{{ route('creator.store') }}";
 				</script>
-	  	{{-- footer --}}			
+	  	{{-- footer --}}
 	  	@include('includes.footer')
 	</div>
+
