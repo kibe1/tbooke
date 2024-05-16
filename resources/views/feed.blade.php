@@ -39,14 +39,32 @@
 								<div class="card-body h-100">
 									@foreach ($posts as $post)
 										<div class="d-flex align-items-start post-box">
-											@if ($post->user->profile_picture)
+											@if ($post->user->id == $user->id)
+												<a href="{{ route('profile.showOwn') }}" class="user-image">
+												@if ($post->user->profile_picture)
 													<img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 												@else
 													<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
+												@endif
+											</a>
+											@else
+											<a href="{{ route('profile.show', $post->user->username) }}" class="user-image">
+												@if ($post->user->profile_picture)
+													<img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
+												@else
+													<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
+												@endif
+											</a>
 											@endif
 											<div class="flex-grow-1">
 												<small class="float-end text-navy">{{ $post->created_at->diffForHumans() }}</small>
-												<strong>{{ $post->user->first_name }} {{ $post->user->surname }}</strong><br>
+												<strong>
+												@if ($post->user->id == $user->id)
+												<a href="{{ route('profile.showOwn') }}" class="user-name">{{ $post->user->first_name }} {{ $post->user->surname }}</a>
+												@else
+												<a href="{{ route('profile.show', $post->user->username) }}" class="user-name">{{ $post->user->first_name }} {{ $post->user->surname }}</a>
+												@endif
+												</strong><br>
 												<p>{{ $post->content }}</p>
 						
 												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="heart"></i> Like</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="heart"></i></span></a>

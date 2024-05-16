@@ -6,49 +6,11 @@
         	@include('includes.topbar')
 				{{-- Main Content --}}
 				<main class="content">
-						<!-- Success Modal -->
-						<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true"  data-bs-keyboard="true">
-							<div class="modal-dialog modal-sm modal-dialog-centered position-absolute end-0">
-								<div class="modal-content bg-white">
-									<div class="modal-header border-0">
-										<h5 class="modal-title text-success" id="successModalLabel">
-											Post created successfully
-										</h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Success Modal -->
-						<div class="modal fade" id="successModalApplication" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true"  data-bs-keyboard="true">
-							<div class="modal-dialog modal-sm modal-dialog-centered position-absolute end-0">
-								<div class="modal-content bg-white">
-									<div class="modal-header border-0">
-										<h5 class="modal-title text-success" id="successModalLabel">
-											Application done successfully
-										</h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								</div>
-							</div>
-						</div>
-
-
 				<div class="container-fluid p-0">
-				
 					<div class="mb-3">
 						<div class="row mb-3">
 							<div class="col-md-6 d-flex justify-content-start align-items-center">
 								<h1 class="h3 d-inline align-middle">Profile</h1>
-								<a href="{{ route('profile.edit') }}" class="btn btn-primary ms-2">Edit Profile</a>
-							</div>
-
-							<div class="col-md-6 tbooke-creator-btn-application">
-								@if ($userIsCreator)
-									<button type="button" class="btn btn-tbooke mb-2 mb-md-0 me-md-2 tbooke-creator-btn">Tbooke Creator</button>
-								@elseif($user->profile_type !== 'student' && $user->profile_type !== 'institution' && $user->profile_type !== 'other')
-									<button type="button" class="btn btn-tbooke mb-2 mb-md-0 me-md-2" data-bs-toggle="modal" data-bs-target="#creatorMode">Become a Tbooke Creator</button>
-								@endif
 							</div>
 						</div>
 					</div>
@@ -65,32 +27,53 @@
 										@else
 											<img src="{{ asset('/default-images/avatar.png') }}" alt="Default Profile Picture" alt="Profile Picture" class="img-fluid rounded-circle mb-2" width="128" height="128">
 										@endif
-									<h5 class="card-title mb-0">{{ Auth::user()->first_name }} {{ Auth::user()->surname }}</h5>
+									<h5 class="card-title mb-0">{{ $user->first_name }} {{ $user->surname }}</h5>
 									<div class="text-muted mb-2 capitalize">{{ Auth::user()->profile_type }}</div>
-									<div class="mb-3 d-inline-flex card-title text-center">
-										<p class="me-2">Followers: {{ $followersCount }}</p>
-										<p class="ms-2">Following: {{ $followingCount }}</p>
+
+									<div class="mb-3 d-flex justify-content-center">
+										@if(Auth::user()->follows($user))
+										<form id="unfollowForm">
+										@csrf
+										<button type="submit" class="btn btn-danger btn-sm me-2" id="unfollowButton" >
+											<i class="feather-sm" data-feather="user-minus"></i> Unfollow
+										</button>
+										</form>
+										@else		
+										<form id="followForm">
+											@csrf
+											<button type="submit" class="btn btn-primary btn-sm me-2" id="followButton" >
+												<i class="feather-sm" data-feather="user-plus"></i> Follow
+											</button>
+										</form>
+										@endif
+										<form action="">
+											<button class="btn btn-primary btn-sm ms-2">
+												<i class="feather-sm" data-feather="message-square"></i> Message
+											</button>
+										</form>
 									</div>
+
+
 								</div>
                                 	<hr class="my-0">
 								<div class="card-body ml-3">
-									<h5 class="h6 card-title">About Me</h5>
+									<h5 class="h6 card-title">About</h5>
                                      @if ($profileDetails && $profileDetails->about)
 											<p>{{ $profileDetails->about }}</p>
 											@else
-											<p>You haven't added about you.</p>
+											<p>No about given.</p>
 									@endif
 								</div>
 								<hr class="my-0">
 								<div class="card-body">
-									<h5 class="h6 card-title">My Subjects</h5>
+									<h5 class="h6 card-title">Subjects</h5>
 										<div class="subject-links">
 											@if ($profileDetails && $profileDetails->user_subjects)
 												@foreach (explode(',', $profileDetails->user_subjects) as $subject)
 													<a href="#" class="badge bg-primary me-1 my-1">{{ $subject }}</a>
 												@endforeach
 											@else
-												<p>You haven't added any subjects.</p>
+												<p>No Subjects added.</p>
 											@endif
 										</div>
 								</div>
@@ -103,7 +86,7 @@
 													<a href="#" class="badge bg-primary me-1 my-1">{{ $topic }}</a>
 												@endforeach
 											@else
-												<p>You haven't added any favorite topics.</p>
+												<p>No topics added.</p>
 											@endif
 										</div>
 								</div>
@@ -124,14 +107,13 @@
 						</div>
 
 						<div class="col-md-7 col-xl-7">
-						   
 						   <div class="card" id="activityFeed">
 								<div class="card-header d-flex justify-content-between align-items-center">
 									<h5 class="card-title mb-0">Activities</h5>
 								</div>
 								<div class="card-body h-100">
 									@if ($posts->isEmpty())
-        							 <p>You do not have any activities.</p>
+        							 <p>No activities added.</p>
 									@else
 										@foreach ($posts as $post)
 										<div class="d-flex align-items-start post-box">
@@ -191,83 +173,15 @@
 									@endif
 								</div>
 							</div>
-									<!-- Create Post Modal -->
-										<div class="modal fade" id="createPost" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="createPostLabel">Create Post</h5>
-														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-													</div>
-													<div class="modal-body">
-														<form id="createPostForm">
-															@csrf
-															<div class="mb-3">
-																<label for="postContent" class="form-label">Post Content</label>
-																<textarea class="form-control" id="postContent" name="content" rows="7" placeholder="Enter your post content"></textarea>
-															</div>
-														</form>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-														<button type="button" class="btn btn-primary" id="submitPostBtn">Create</button>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<!-- Become a creator -->
-										<div class="modal fade" id="creatorMode" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="">Become a Creator</h5>
-														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-													</div>
-													<div class="modal-body">
-														<form id="creatorModeForm">
-															@csrf
-															<div class="mb-3">
-          														<select data-placeholder="Which subjects do you consider yoursel an expert?" name="creator_subjects[]" multiple class="chosen-select-width form-select" tabindex="16">
-																	<option value="Geography">Geography</option>
-																	<option value="Mathemathics">Mathemathics</option>
-																	<option value="English">English</option>
-																	<option value="Kiswahili">Kiswahili</option>
-																	<option value="Business">Business</option>
-																</select>
-																{{-- <input class="form-control" type="text" name="creator_subjects" value="" placeholder="Which subjects do you consider yoursel an expert?"> --}}
-															</div>
-															<div class="mb-3">
-          														<select data-placeholder="Which learning grades will be your main target?" name="creator_expertise[]" multiple class="chosen-select-width form-select" tabindex="16">
-																	<option value="pre_school">Pre School</option>
-																	<option value="grade_1_6">Grades 1-6</option>
-																	<option value="cbc_content">CBC Content</option>
-																	<option value="jss">Junior Secondary School</option>
-																	<option value="high_school">High School</option>
-																</select>
-															</div>
-															<div class="mb-3">
-																<textarea class="form-control"  name="the_why" rows="7" placeholder="Why do you want to become a Tbooke creator"></textarea>
-															</div>
-														</form>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-														<button type="button" class="btn btn-primary" id="submitRequestBtn">Submit</button>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										
-									</div>
-							</div>
+						</div>
 					</div>
+				</div>
 			</main>
-				<script>
-					const postStoreRoute = "{{ route('posts.store') }}";
-					const creatorApplicationRoute = "{{ route('creator.store') }}";
-				</script>
+
+	<script>
+		const userFollowRoute = "{{ route('users.follow', $user->id) }}";
+		const userunfollowRoute = "{{ route('users.unfollow', $user->id) }}";
+	</script>			
 	  	{{-- footer --}}
 	  	@include('includes.footer')
 	</div>

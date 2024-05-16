@@ -15,6 +15,7 @@ class TeacherDetail extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'about',
         'user_subjects',
         'favorite_topics',
@@ -22,5 +23,8 @@ class TeacherDetail extends Model
         'profile_pic',
     ];
 
-    // Your other model code...
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

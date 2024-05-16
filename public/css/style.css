@@ -307,3 +307,6 @@ button.btn.btn-tbooke.mb-2.mb-md-0.me-md-2.tbooke-creator-btn {
 .content-stats-span {
   padding-left: 20px;
 }
+.user-image {
+  display: contents;
+}

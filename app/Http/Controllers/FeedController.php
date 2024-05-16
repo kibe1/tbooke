@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class FeedController extends Controller
 {
@@ -32,12 +33,23 @@ class FeedController extends Controller
         } else {
             $comments = null; // No specific post ID provided, set comments to null
         }
+
+         // Get notifications
+         $notifications = Notification::where('user_id', auth()->id())
+            ->orderByDesc('created_at')
+            ->get();
+
+            $notificationCount = $notifications->count();
+
     
-        return view('feed', compact('user', 'posts', 'comments'));
+        return view('feed', compact('user', 'posts', 'comments', 'notifications', 'notificationCount'));
     }
 
     public function learning (Request $request) {
+        
         $user = Auth::user();
+
+        
         return view ('learning-resources', compact('user'));
     }
 }

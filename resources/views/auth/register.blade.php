@@ -63,8 +63,8 @@
 											<select name="profile_type" class="form-select mb-3 @error('profile_type') is-invalid @enderror" >
 												<option value="student" {{ old('profile_type') == 'student' ? 'selected' : '' }}>Student/Learner</option>
 												<option value="teacher" {{ old('profile_type') == 'teacher' ? 'selected' : '' }}>Teacher/Tutor</option>
-												{{-- <option value="institution" {{ old('profile_type') == 'institution' ? 'selected' : '' }}>Institution</option>
-												<option value="other" {{ old('profile_type') == 'other' ? 'selected' : '' }}>Other</option> --}}
+												<option value="institution" {{ old('profile_type') == 'institution' ? 'selected' : '' }}>Institution</option>
+												<option value="other" {{ old('profile_type') == 'other' ? 'selected' : '' }}>Other</option>
 											</select>
 										</div>
 										<div class="mb-3">

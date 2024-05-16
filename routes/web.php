@@ -11,6 +11,7 @@ use App\Http\Controllers\TbookeBlueboardController;
 use App\Http\Controllers\TbookeLearningController;
 use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\FollowerController;
 
 
 Route::get('/', function () {
@@ -20,12 +21,18 @@ Route::get('/', function () {
 
 Route::get('/about', function () {return view('about'); });
 
+// Route::get('/storage-link', function(){
+//     $targetFolder = storage_path('app/public');
+//     $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+//     symlink($targetFolder,$linkFolder);
+// });
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Authenticated routes
     Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::get('/profile', [ProfileController::class, 'showOwn'])->name('profile.showOwn');
     Route::get('/profile/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
@@ -39,7 +46,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/tbooke-learning', [TbookeLearningController::class, 'store'])->name('tbooke-learning.store');
     Route::get('/tbooke-learning/create', [TbookeLearningController::class, 'index'])->name('tbooke-learning.create');
     Route::get('/tbooke-learning/{slug}', [ContentController::class, 'show'])->name('content.show');
-
+    Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
+    Route::post('/users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
 });
 
 

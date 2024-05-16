@@ -15,10 +15,15 @@ class InstitutionDetail extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
+        'institution_name',
         'about',
         'location',
         'website',
     ];
 
-    // Your other model code...
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

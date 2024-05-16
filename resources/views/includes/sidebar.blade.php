@@ -22,7 +22,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="{{route('profile')}}">
+						<a class="sidebar-link" href="{{route('profile.showOwn')}}">
               <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
             </a>
 					</li>

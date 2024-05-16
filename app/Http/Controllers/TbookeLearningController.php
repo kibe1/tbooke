@@ -8,6 +8,7 @@ use App\Models\Creator;
 use App\Models\TbookeLearning;
 use Alert;
 use Illuminate\Support\Str;
+use App\Models\Notification;
 
 class TbookeLearningController extends Controller
 {
@@ -17,8 +18,11 @@ class TbookeLearningController extends Controller
         $userIsCreator = Creator::where('user_id', $user->id)->exists();
         $contents = TbookeLearning::latest()->get();
     
+        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+
         return view('tbooke-learning', [
             'user' => $user,
+            'notifications' => $notifications,
             'userIsCreator' => $userIsCreator,
             'contents' => $contents, // Pass the contents variable to the view
         ]);

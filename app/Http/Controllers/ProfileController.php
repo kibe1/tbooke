@@ -9,19 +9,25 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use App\Models\Creator;
 use Alert;
+use App\Models\User;
+use App\Models\Notification;
 
 class ProfileController extends Controller
 {
         public function dashboard()
     {
         $user = Auth::user(); 
-        return view('dashboard', ['user' => $user]);
+        
+        // Get following count
+        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+
+       
+        return view('dashboard', compact('user', 'notifications'));
     }
 
 
-
     // Show the user's profile.
-    public function show()
+    public function showOwn()
     {
         $user = Auth::user();
 
@@ -33,6 +39,8 @@ class ProfileController extends Controller
             $profileDetails = $user->studentDetails;
         } elseif ($user->profile_type === 'institution') {
             $profileDetails = $user->institutionDetails;
+        } elseif ($user->profile_type === 'other') {
+            $profileDetails = $user->otherDetails;
         }
 
           // Convert socials string to array if it's stored as JSON in the database
@@ -47,15 +55,26 @@ class ProfileController extends Controller
         $userIsCreator = Creator::where('user_id', $user->id)->exists();
         $userIsTeacher = $user->profile_type === 'teacher';
         
+        // Get followers count
+        $followersCount = $user->followers()->count();
 
-        // dd($userIsStudent);
+        // Get following count
+        $followingCount = $user->followings()->count();
 
+        // Get notifications
+        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+        $notificationCount = $notifications->count();
+        
         return view('profile', [
             'user' => $user,
             'profileDetails' => $profileDetails,
             'posts' => $posts,
             'userIsCreator' => $userIsCreator,
             'userIsTeacher' => $userIsTeacher,
+            'followersCount' => $followersCount,
+            'followingCount' => $followingCount,
+            'notifications' => $notifications,
+            'notificationCount' => $notificationCount,
         ]);
     }
 
@@ -72,6 +91,8 @@ class ProfileController extends Controller
             $profileDetails = $user->studentDetails;
         } elseif ($user->profile_type === 'institution') {
             $profileDetails = $user->institutionDetails;
+        } elseif ($user->profile_type === 'other') {
+            $profileDetails = $user->otherDetails;
         }
 
         // Convert socials string to array if it's stored as JSON in the database
@@ -92,11 +113,18 @@ class ProfileController extends Controller
         $userSubjects = explode(',', $profileDetails->user_subjects);
        }
 
+       
+        // Get notifications
+        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+        $notificationCount = $notifications->count();
+
         return view('profile.edit-profile', [
             'user' => $user,
             'profileDetails' => $profileDetails,
             'favoriteTopics' => $favoriteTopics,
             'userSubjects' => $userSubjects,
+            'notifications' => $notifications,
+            'notificationCount' => $notificationCount
             
         ]);
     }
@@ -206,4 +234,41 @@ class ProfileController extends Controller
         Alert::Success('Profile updated successfuly');
         return redirect()->route('profile.edit');
       }
+
+        // Show the user's profile.
+        public function show($username)
+        {
+            $user = User::where('username', $username)->firstOrFail();
+
+     // Get the user's profile details based on their profile type
+        $profileDetails = null;
+        if ($user->profile_type === 'teacher') {
+            $profileDetails = $user->teacherDetails;
+        } elseif ($user->profile_type === 'student') {
+            $profileDetails = $user->studentDetails;
+        } elseif ($user->profile_type === 'institution') {
+            $profileDetails = $user->institutionDetails;
+        } elseif ($user->profile_type === 'other') {
+            $profileDetails = $user->otherDetails;
+        }
+
+          // Convert socials string to array if it's stored as JSON in the database
+          if ($profileDetails->socials) {
+            $profileDetails->socials = json_decode($profileDetails->socials, true);
+        }
+
+         // Get the user's posts
+        $posts = $user->posts()->latest()->get();
+        // Get following count
+        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+        $notificationCount = $notifications->count();
+
+            return view('profile.show', [
+            'user' => $user,
+            'profileDetails' => $profileDetails,
+            'posts' => $posts,
+            'notifications' => $notifications,
+            'notificationCount' => $notificationCount,
+            ]);
+        }
 }

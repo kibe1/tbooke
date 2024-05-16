@@ -15,6 +15,7 @@ class StudentDetail extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'about',
         'user_subject',
         'favorite_topics',
@@ -23,5 +24,8 @@ class StudentDetail extends Model
         // Add other fields as needed
     ];
 
-    // Your other model code...
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

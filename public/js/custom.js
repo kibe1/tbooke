@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('creatorModeForm');
     const submitBtn = document.getElementById('submitRequestBtn');
 
-    submitBtn.addEventListener('click', function () {
+    submitBtn.addEventListener('click', function (e) {
+        e.preventDefault(); 
         // Create a FormData object from the form
         const formData = new FormData(form);
 
@@ -150,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     console.log('Comment submitted successfully');
-                    // Reload the page after successful comment submission
                     window.location.reload();
                 } else {
                     throw new Error('Failed to create comment');
@@ -166,9 +166,75 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //textarea
     tinymce.init({
-        selector: '.tinymce-textarea', // Use a class for the text area you want to convert
+        selector: '.tinymce-textarea', 
         plugins: 'advlist autolink lists link image charmap print preview anchor',
         toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
         menubar: false,
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('followForm');
+        const submitBtn = document.getElementById('followButton');
+    
+        submitBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            // Create a FormData object from the form
+            const formData = new FormData(form);
+    
+            // Send a Follow request using AJAX
+            fetch(userFollowRoute, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        throw new Error('Following failed');
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    alert('Following failed');
+                });
+        });
+    });    
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const form = document.getElementById('unfollowForm');
+        const submitBtn = document.getElementById('unfollowButton');
+    
+        submitBtn.addEventListener('click', function (e) {
+
+            e.preventDefault(); 
+
+            // Create a FormData object from the form
+            const formData = new FormData(form);
+    
+            // Send Unfollow request using AJAX
+            fetch(userunfollowRoute, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        throw new Error('unfollowing failed');
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    alert('unfollowing failed');
+                });
+        });
     });
 
