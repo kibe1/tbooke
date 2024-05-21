@@ -12,18 +12,12 @@ use App\Http\Controllers\TbookeLearningController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\SchoolController;
 
-
-Route::get('/', function () {return view('auth.login'); });
-Route::get('/about', function () {return view('about'); });
-
-
-
-
-
+Route::get('/', function () { return view('auth.login'); });
+Route::get('/about', function () { return view('about'); });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
     // Authenticated routes
     Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
@@ -33,7 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/feed', [FeedController::class, 'feeds'])->name('feed');
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::get('/learning-resources', [LearningResourcesController::class, 'learningResource'])->name('learning-resources');
-    Route::get('/schools-corner', [ SchoolsCornerController::class, 'schoolsCorner'])->name('schools-corner');
+    Route::get('/schools-corner', [SchoolsCornerController::class, 'schoolsCorner'])->name('schools-corner');
     Route::get('/tbooke-blueboard', [TbookeBlueboardController::class, 'tbookeBlueboard'])->name('tbooke-blueboard');
     Route::get('/tbooke-learning', [TbookeLearningController::class, 'tbookeLearning'])->name('tbooke-learning');
     Route::post('/save-resource', [ResourceController::class, 'store'])->name('save-resource');
@@ -44,8 +38,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('submission/success/{submission}', [FormController::class, 'showSuccess'])->name('submission.success');
     Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
     Route::get('/tbooke-blueboard', [AnnouncementController::class, 'index'])->name('tbooke-blueboard');
+    Route::post('/save-school-post', [SchoolController::class, 'saveSchoolPost'])->name('save.school.post');
+    Route::get('/schools-corner', [SchoolController::class, 'displaySchoolPosts'])->name('schools-corner');
+
 });
-
-
 
 require __DIR__.'/auth.php';

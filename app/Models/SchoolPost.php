@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FormSubmission extends Model
+class SchoolPost extends Model
 {
     use HasFactory;
-    // protected $fillable = ['school_name', 'advertisement', 'image'];
+    protected $fillable = ['description', 'photo', 'video', 'document'];
 }

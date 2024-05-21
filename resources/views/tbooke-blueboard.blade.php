@@ -7,21 +7,27 @@
     {{-- Main Content --}}
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Tbooke Blueboard
-                <button class="btn btn-lg btn-primary" onclick="showAddAnnouncementForm()" style="background-color: maroon">
-                    <i class="fas fa-plus"></i>Add Announcement
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="h3">Tbooke Blueboard</h1>
+                <button class="btn btn-lg btn-primary ms-auto" onclick="showAddAnnouncementForm()"
+                style="background-color: maroon">
+                     Add Announcement
                 </button>
-                <button class="btn btn-lg btn-primary" onclick="showComingSoon()" style="background-color: maroon; border-color: #008080;">
-                    Edit
-                </button>
-            </h1>
+            </div>
         </div>
+        <style>
+        .h3 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #008080;
+    }
+        </style>
+
         <div class="row">
             <div class="col-md-6">
                 <section>
-                    <h2 class="h3 mb-3">Important Announcements</h2>
-                    <!-- Important Announcements section content -->
-                    <!-- resources/views/announcements/index.blade.php -->
+                    <h2 class="mb-3">Important Announcements</h2>
     <div class="container">
         <div class="row">
             @foreach ($announcements as $announcement)
@@ -44,8 +50,7 @@
 
             <div class="col-md-6">
                 <section>
-                    <h2 class="h3 mb-3">Upcoming Announcements</h2>
-                    <!-- Upcoming Announcements section content -->
+                    <h2 class="mb-3">Upcoming Announcements</h2>
                 </section>
             </div>
         </div>
@@ -64,10 +69,30 @@
             <label for="messageContent" class="form-label">Content</label>
             <textarea class="form-control" id="messageContent" name="messageContent" rows="3"></textarea>
         </div>
+        <div class="mb-3">
+            <label for="imageUpload" class="form-label">Upload Image</label>
+            <input type="file" class="form-control" id="imageUpload" name="imageUpload">
+        </div>
+        <div class="mb-3">
+            <label for="documentUpload" class="form-label">Upload Document</label>
+            <input type="file" class="form-control" id="documentUpload" name="documentUpload">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" 
+            id="importantCheckbox" name="importantCheckbox">
+            <label class="form-check-label" for="importantCheckbox">Important</label>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" 
+            id="upcomingCheckbox" name="importantCheckbox">
+            <label class="form-check-label" for="upcommingCheckbox">Upcomming</label>
+        </div>
     </form>
 </div>
 @include('includes.footer')
 </div>
+
+
 <script>
     function showAddAnnouncementForm() {
         Swal.fire({
@@ -79,44 +104,38 @@
             preConfirm: () => {
                 const title = Swal.getPopup().querySelector('#messageTitle').value;
                 const content = Swal.getPopup().querySelector('#messageContent').value;
-                // Send AJAX request to store announcement
-                fetch('{{ route("announcements.store") }}', {
+
+                return fetch('{{ route("announcements.store") }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({ title, content })
+                    body: JSON.stringify({ messageTitle: title, messageContent: content })
                 })
                 .then(response => {
-                    if (response.ok) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Announcement added successfully.',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href = "{{ route('tbooke-blueboard') }}"; // Redirect to homepage after success
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'An error occurred while processing your request.',
-                            confirmButtonText: 'OK'
-                        });
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
                     }
+                    return response.json();
                 })
                 .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'An error occurred while processing your request.',
-                        confirmButtonText: 'OK'
-                    });
+                    Swal.showValidationMessage(
+                        `Request failed: ${error}`
+                    );
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Announcement added successfully.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = "{{ route('tbooke-blueboard') }}";
                 });
             }
         });
     }
 </script>
-

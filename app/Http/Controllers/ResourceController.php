@@ -13,39 +13,46 @@ class ResourceController extends Controller
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
+            'name' => 'required|string',
             'location' => 'required|string',
             'category' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'discounted_price' => 'nullable|numeric|min:0|lt:price',
+            'phone' => 'required|string',
+            'email' => 'required|string|email',
+            'whatsapp' => 'required|string',
             'file' => 'nullable|file',
             'about' => 'required|string',
         ]);
 
         // Create a new resource instance and fill it with validated data
         $resource = new Resource();
+        $resource->name = $validatedData['name'];
         $resource->location = $validatedData['location'];
         $resource->category = $validatedData['category'];
+        $resource->price = $validatedData['price'];
+        $resource->discounted_price = $validatedData['discounted_price'];
+        $resource->phone = $validatedData['phone'];
+        $resource->email = $validatedData['email'];
+        $resource->whatsapp = $validatedData['whatsapp'];
 
         // Handle file upload if applicable
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            // Generate a unique filename
             $fileName = time() . '_' . $file->getClientOriginalName();
-            // Specify the full path to the "uploads" directory
             $filePath = public_path('uploads');
-            // Move the uploaded file to the specified directory
             $file->move($filePath, $fileName);
-            // Set the file attribute to the filename
             $resource->file = $fileName;
         }
         $resource->about = $validatedData['about'];
 
-        // Save the resource to the database
         $resource->save();
         
         // Return a JSON response containing the redirect URL
         return response()->json([
             'success' => true,
             'message' => 'Resource added successfully.',
-            'redirect_url' => route('learning-resources', ['success' => true])  // Adjust this to the route of the page you want to redirect to
+            'redirect_url' => route('learning-resources', ['success' => true])
         ]);
     }
 
