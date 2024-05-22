@@ -21,7 +21,7 @@
       <div class="col-sm-8 col-md-6 mx-auto d-table welcome-tbooke">
           <div class="d-table-cell align-middle">
               <h1>Welcome to Tbooke</h1>
-              <p class="home-p" >Tbooke.net is more than just a platform,it’s a community where education professionals, institutions and learners share, connect and grow together all while enjoying content that’s educational and entertaining</p>
+              <p class="home-p" >The ultimate community for education professionals, institutions and learners to connect, share and grow together with content that's educational and entertaining</p>
               <a href="/about" class="btn">Learn More</a>
           </div>
       </div>

@@ -9,29 +9,17 @@ use App\Http\Controllers\LearningResourcesController;
 use App\Http\Controllers\SchoolsCornerController;
 use App\Http\Controllers\TbookeBlueboardController;
 use App\Http\Controllers\TbookeLearningController;
-use App\Http\Controllers\CreatorController;
-use App\Http\Controllers\ContentController;
-use App\Http\Controllers\FollowerController;
-use App\Http\Controllers\NotificationsController;
-use App\Http\Controllers\LikeController;
 
 
-Route::get('/', function () {
-    if (auth()->check()) {return redirect('/dashboard');  }
-    return view('auth.login');
-});
-
+Route::get('/', function () {return view('auth.login'); });
 Route::get('/about', function () {return view('about'); });
 
-// Route::get('/storage-link', function(){
-//     $targetFolder = storage_path('app/public');
-//     $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
-//     symlink($targetFolder,$linkFolder);
-// });
+
+
+
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
     // Authenticated routes
     Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'showOwn'])->name('profile.showOwn');
@@ -41,20 +29,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/feed', [FeedController::class, 'feeds'])->name('feed');
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::get('/learning-resources', [LearningResourcesController::class, 'learningResource'])->name('learning-resources');
-    Route::get('/schools-corner', [ SchoolsCornerController::class, 'schoolsCorner'])->name('schools-corner');
+    Route::get('/schools-corner', [SchoolsCornerController::class, 'schoolsCorner'])->name('schools-corner');
     Route::get('/tbooke-blueboard', [TbookeBlueboardController::class, 'tbookeBlueboard'])->name('tbooke-blueboard');
     Route::get('/tbooke-learning', [TbookeLearningController::class, 'tbookeLearning'])->name('tbooke-learning');
-    Route::post('/creator', [CreatorController::class, 'store'])->name('creator.store');
-    Route::post('/tbooke-learning', [TbookeLearningController::class, 'store'])->name('tbooke-learning.store');
-    Route::get('/tbooke-learning/create', [TbookeLearningController::class, 'index'])->name('tbooke-learning.create');
-    Route::get('/tbooke-learning/{slug}', [ContentController::class, 'show'])->name('content.show');
-    Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
-    Route::post('/users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
-    Route::post('/users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
-    Route::post('/notifications/read', [NotificationsController::class, 'markAsRead'])->name('notifications.markAsRead');
-    Route::post('/post/{id}/like', [LikeController::class, 'likePost'])->name('post.like');
-    Route::post('/post/{id}/unlike', [LikeController::class, 'unlikePost'])->name('post.unlike');
-    Route::post('/posts/{post}/share', [PostController::class, 'sharePost'])->name('post.share');
 
 });
 

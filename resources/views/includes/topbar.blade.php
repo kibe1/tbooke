@@ -1,6 +1,6 @@
 
 
-	<nav class="navbar navbar-expand navbar-light navbar-bg">
+<nav class="navbar navbar-expand bg-body-tertiary">
 		<a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
         </a>
@@ -13,6 +13,7 @@
 									<span class="indicator">{{ $notificationCount }}</span>
 								</div>
 							</a>
+{{--
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
 								<div class="dropdown-menu-header">
 								 Notifications

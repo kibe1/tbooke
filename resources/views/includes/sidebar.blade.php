@@ -3,7 +3,6 @@
 				<a class="sidebar-brand" href="/dashboard">
           <img src="/images/tbooke-logo.png" class="logo" alt="" />
         </a>
-
 				<ul class="sidebar-nav">
 					<li class="sidebar-header">
 						Your Pages
