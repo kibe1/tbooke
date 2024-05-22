@@ -13,7 +13,7 @@
 									<span class="indicator">{{ $notificationCount }}</span>
 								</div>
 							</a>
-{{--
+
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
 								<div class="dropdown-menu-header">
 								 Notifications
@@ -38,9 +38,9 @@
 									<p class="ml-20">You do not have new notifications.</p>
 								@endif
 								</div>
-								{{-- <div class="dropdown-menu-footer">
+								<div class="dropdown-menu-footer">
 									<a href="#" class="text-muted">Show all notifications</a>
-								</div> --}}
+								</div>
 							</div>
 						</li>
 						<li class="nav-item dropdown">
