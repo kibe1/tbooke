@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('createPostForm');
     const submitBtn = document.getElementById('submitPostBtn');
 
-    submitBtn.addEventListener('click', function () {
+    submitBtn.addEventListener('click', function (e) {
+        e.preventDefault();
         // Create a FormData object from the form
         const formData = new FormData(form);
 
@@ -238,3 +239,117 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const alertsDropdown = document.getElementById('alertsDropdown');
+    
+        if (alertsDropdown) {
+            alertsDropdown.addEventListener('click', function () {
+                fetch(notificationsClear, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                    // Optionally update the UI to reflect the read notifications
+                    document.querySelector('.indicator').innerText = 0;
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        }
+    });
+
+
+    $(document).ready(function() {
+        $('.like-unlike-form').submit(function(event) {
+            event.preventDefault(); 
+
+            var form = $(this);
+            var action = form.attr('action');
+            var method = form.attr('method');
+            var data = form.serialize();
+            var postId = form.data('post-id');
+            var actionLike = form.data('action-like');
+            var actionUnlike = form.data('action-unlike');
+            var likeCount = ('#likes-count-' + postId);
+            
+            $.ajax({
+                url: action,
+                method: method,
+                data: data,
+                success: function(response) {
+
+                if (action === actionLike) {
+                    // Change to unlike button
+                    form.attr('action', actionUnlike);
+                    form.find('button').attr('id', 'unlikeButton-' + postId).removeClass('like-btn').addClass('unlike-btn engage-unlike-btn')
+                        .html('<span class="d-none d-md-inline"><i class="feather-sm" data-feather="thumbs-down"></i> Unlike</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="thumbs-down"></i></span>');
+                } else {
+                    // Change to like button
+                    form.attr('action', actionLike);
+                    form.find('button').attr('id', 'likeButton-' + postId).removeClass('unlike-btn engage-unlike-btn').addClass('like-btn')
+                        .html('<span class="d-none d-md-inline"><i class="feather-sm" data-feather="thumbs-up"></i> Like</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="thumbs-up"></i></span>');
+                }
+
+                $(likeCount).html('<i class="feather-sm" data-feather="thumbs-up"></i> ' + response.likesCount);     
+
+                 // Reinitialize feather icons
+                 feather.replace();
+
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error:', error); 
+                }
+            });
+        });
+    });
+
+
+
+    $(document).ready(function () {
+        $('.share-form').on('submit', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var formData = form.serialize();
+            var postId = form.data('post-id');
+            
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+    
+                    // Show the success modal on share
+                    $('#successModalonShare').modal('show');
+    
+                    // Close the success modal after 2.2 seconds
+                    setTimeout(function () {
+                        $('#successModalonShare').modal('hide');
+                    }, 2200); 
+    
+                    // Update the repost count for the specific post
+                    var postContainer = $('#post-' + postId);
+                    var reshareCountElement = postContainer.find('#reshare-count-' + postId);
+    
+                    if (reshareCountElement.length === 0) {
+                        // If the element doesn't exist, create it
+                        var commentStats = postContainer.find('.comment-stats.float-end');
+                        commentStats.append('<a class="text-muted reshare-count" id="reshare-count-' + postId + '" href="#">1 Repost</a>');
+                    } else {
+                        // If the element exists, update its count
+                        var currentCount = parseInt(reshareCountElement.text().trim().split(' ')[0]) || 0;
+                        reshareCountElement.text((currentCount + 1) + ' Reposts');
+                    }
+    
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+    

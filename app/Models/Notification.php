@@ -13,8 +13,8 @@ class Notification extends Model
         'user_id',
         'sender_id',
         'type',
+        'follower_name',
         'message',
-        'read_at',
     ];
 
     /**
@@ -23,8 +23,26 @@ class Notification extends Model
      * @param int $userId
      * @return \Illuminate\Database\Eloquent\Collection
      */
+
+     public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+    }
+
+
     public static function getUserNotifications($userId)
     {
-        return self::where('user_id', $userId)->orderByDesc('created_at')->get();
+        // return self::where('user_id', $userId)->orderByDesc('created_at')->get();
+        return self::where('user_id', $userId)
+        ->where('read', 0) // Only fetch unread notifications
+        ->orderByDesc('created_at')
+        ->get();
+    }
+
+    public static function markAsRead($userId)
+    {
+        self::where('user_id', $userId)->where('read', 0)->update([
+            'read' => 1,
+        ]);
     }
 }

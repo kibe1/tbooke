@@ -17,6 +17,8 @@ class CreateNotificationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); // User who receives the notification
             $table->unsignedBigInteger('sender_id'); // User who triggered the notification
+            $table->unsignedBigInteger('type');
+            $table->unsignedBigInteger('follower_name');
             $table->string('message');
             $table->boolean('read')->default(false);
             $table->timestamps();

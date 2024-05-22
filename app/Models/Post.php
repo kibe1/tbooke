@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['user_id', 'content'];
+    protected $fillable = ['user_id', 'content', 'reshares_count'];
 
     public function user()
     {
@@ -23,4 +23,16 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
+
+    public function reshares()
+    {
+        return $this->hasMany(ResharedPost::class, 'original_post_id');
+    }
+
+
 }

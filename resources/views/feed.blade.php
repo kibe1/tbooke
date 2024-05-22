@@ -5,13 +5,14 @@
 			{{-- Topbar --}}
         	@include('includes.topbar')
 				{{-- Main Content --}}
-				<main class="content">		
-					<!-- Success Modal -->
+				<main class="content">	
+
+					<!-- Success Modal after creating post-->
 						<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true"  data-bs-keyboard="true">
 							<div class="modal-dialog modal-sm modal-dialog-centered position-absolute end-0">
-								<div class="modal-content bg-white">
+								<div class="modal-content modal-content-success">
 									<div class="modal-header border-0">
-										<h5 class="modal-title text-success" id="successModalLabel">
+										<h5 class="modal-title" id="successModalLabel">
 											Post created successfully
 										</h5>
 										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -19,6 +20,20 @@
 								</div>
 							</div>
 						</div>
+
+					<!-- Success Modal after sharing post-->
+					<div class="modal fade" id="successModalonShare" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="false">
+						<div class="modal-dialog modal-sm modal-dialog-centered position-absolute end-0">
+							<div class="modal-content modal-content-success">
+								<div class="modal-header">
+									<h5 class="modal-title" id="successModalLabel">
+										Repost successful
+									</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+							</div>
+						</div>
+					</div>
 
 				<div class="container-fluid p-0">
 				<div class="mb-3">
@@ -38,9 +53,9 @@
 						   <div class="card" id="activityFeed">
 								<div class="card-body h-100">
 									@foreach ($posts as $post)
-										<div class="d-flex align-items-start post-box">
+										<div class="d-flex align-items-start post-box" id="post-{{ $post->id }}">
 											@if ($post->user->id == $user->id)
-												<a href="{{ route('profile.showOwn') }}" class="user-image">
+											<a href="{{ route('profile.showOwn') }}" class="user-image">
 												@if ($post->user->profile_picture)
 													<img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="rounded-circle img-fluid me-2" width="36" height="36">
 												@else
@@ -66,14 +81,43 @@
 												@endif
 												</strong><br>
 												<p>{{ $post->content }}</p>
-						
-												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="heart"></i> Like</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="heart"></i></span></a>
-												<a class="btn btn-sm btn-secondary mt-1  rounded comment-toggle-btn"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="message-square"></i> Comment</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="message-square"></i></span></a>
-												<a href="#" class="btn btn-sm btn-secondary rounded mt-1"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="share"></i> Repost</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="share"></i></span></a>
+												<span id="likes-count-{{ $post->id }}"><i class="feather-sm" data-feather="thumbs-up"></i> {{ $post->likes->count() }}</span> <br>
+
+												@if($post->likes->contains('id', auth()->user()->id))
+													<form id="unlikeForm-{{ $post->id }}" action="{{ route('post.unlike', $post->id) }}" method="POST" class="like-unlike-form" data-post-id="{{ $post->id }}" data-action-like="{{ route('post.like', $post->id) }}" data-action-unlike="{{ route('post.unlike', $post->id) }}">
+														@csrf
+														<button type="submit" id="unlikeButton-{{ $post->id }}" class="btn btn-sm btn-secondary rounded mt-1 engage-btns unlike-btn engage-unlike-btn">
+															<span class="d-none d-md-inline"><i class="feather-sm" data-feather="thumbs-down"></i> Unlike</span>
+															<span class="d-inline d-md-none"><i class="feather-sm" data-feather="thumbs-down"></i></span>
+														</button>
+													</form>
+												@else
+													<form id="likeForm-{{ $post->id }}" action="{{ route('post.like', $post->id) }}" method="POST" class="like-unlike-form" data-post-id="{{ $post->id }}" data-action-like="{{ route('post.like', $post->id) }}" data-action-unlike="{{ route('post.unlike', $post->id) }}">
+														@csrf
+														<button type="submit" id="likeButton-{{ $post->id }}" class="btn btn-sm btn-secondary rounded mt-1 engage-btns like-btn">
+															<span class="d-none d-md-inline"><i class="feather-sm" data-feather="thumbs-up"></i> Like</span>
+															<span class="d-inline d-md-none"><i class="feather-sm" data-feather="thumbs-up"></i></span>
+														</button>
+													</form>
+												@endif
+
+												<a class="btn btn-sm btn-secondary mt-1  rounded comment-toggle-btn engage-btns"><span class="d-none d-md-inline"><i class="feather-sm" data-feather="message-square"></i> Comment</span><span class="d-inline d-md-none"><i class="feather-sm" data-feather="message-square"></i></span></a>
+													
+													
+														<form id="reshare-{{ $post->id }}" action="{{ route('post.share', $post->id) }}" method="POST" class="share-form" data-post-id="{{ $post->id }}">
+															@csrf
+															<button type="submit" id="shareButton-{{ $post->id }}" class="btn btn-sm btn-secondary rounded mt-1 engage-btns like-btn">
+																<span class="d-none d-md-inline"><i class="feather-sm" data-feather="repeat"></i> Repost</span>
+																<span class="d-inline d-md-none"><i class="feather-sm" data-feather="repeat"></i></span>
+															</button>
+														</form>
 
 													<div class="comment-stats float-end">
 														 @if ($post->comments->count() > 0)
-															<a class="text-muted comment-toggle-btn" href="#">{{ $post->comments->count() }} Comments</a>
+															<a class="text-muted comment-toggle-btn comment-count" href="#">{{ $post->comments->count() }} {{ $post->comments->count() > 1 ? 'Comments' : 'Comment' }}</a>
+														@endif
+														@if ($post->reshare_count > 0)
+															<a class="text-muted reshare-count" id="reshare-count-{{ $post->id }}" href="#">{{ $post->reshare_count }} {{ $post->reshare_count > 1 ? 'Reposts' : 'Repost' }}</a>
 														@endif
 													</div>
 												<br>
@@ -143,7 +187,7 @@
 				<script>
 					const postStoreRoute = "{{ route('posts.store') }}";
 					const commentStoreRoute = "{{ route('comment.store') }}";
-				</script>
+				</script>	
 	  	{{-- footer --}}			
 	  	@include('includes.footer')
 	</div>

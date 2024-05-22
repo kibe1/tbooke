@@ -15,28 +15,31 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
 								<div class="dropdown-menu-header">
-									{{ $notificationCount }} New Notifications
+								 Notifications
 								</div>
 								<div class="list-group">
+								@if ($notificationCount > 0)
 									@foreach ($notifications as $notification)
-										<a href="#" class="list-group-item">
+										<span class="list-group-item">
 											<div class="row g-0 align-items-center">
 												<div class="col-2">
 													<i class="text-success" data-feather="user-plus"></i>
 												</div>
 												<div class="col-10">
-													<div class="text-dark type">New Follower</div>
-													<div class="text-muted small mt-1">{{ $notification->message }}</div>
+													<div class="text-dark type">{{ $notification->type }}</div>
+													<div class="text-muted small mt-1"><a href="{{ route('profile.show', [$notification->sender->username]) }}">{{ $notification->follower_name }}</a> {{ $notification->message }}</div>
 													<div class="text-muted small mt-1">{{ $notification->created_at->diffForHumans() }}</div>
 												</div>
 											</div>
-										</a>
+										</span>
 									@endforeach
+								@else
+									<p class="ml-20">You do not have new notifications.</p>
+								@endif
 								</div>
-
-								<div class="dropdown-menu-footer">
+								{{-- <div class="dropdown-menu-footer">
 									<a href="#" class="text-muted">Show all notifications</a>
-								</div>
+								</div> --}}
 							</div>
 						</li>
 						<li class="nav-item dropdown">

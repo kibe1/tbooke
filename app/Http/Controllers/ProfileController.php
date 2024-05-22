@@ -11,6 +11,7 @@ use App\Models\Creator;
 use Alert;
 use App\Models\User;
 use App\Models\Notification;
+use App\Models\ResharedPost;
 
 class ProfileController extends Controller
 {
@@ -18,11 +19,15 @@ class ProfileController extends Controller
     {
         $user = Auth::user(); 
         
-        // Get following count
-        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
-
+        // Get notifications
+        $notifications = Notification::with('sender')
+        ->where('user_id', auth()->user()->id) 
+        ->where('read', 0)
+        ->orderByDesc('created_at')
+        ->get();
+        $notificationCount = $notifications->count();
        
-        return view('dashboard', compact('user', 'notifications'));
+        return view('dashboard', compact('user', 'notifications', 'notificationCount'));
     }
 
 
@@ -50,7 +55,16 @@ class ProfileController extends Controller
 
         // Get the user's posts
         $posts = $user->posts()->orderBy('created_at', 'desc')->get();
-        // dd($posts);
+        
+            // Check if the user has reshared each post and count the reshares
+            foreach ($posts as $post) {
+                $post->reshared = ResharedPost::where('user_id', $user->id)
+                                               ->where('original_post_id', $post->id)
+                                               ->exists();
+                $post->reshare_count = ResharedPost::where('original_post_id', $post->id)
+                                                   ->count();
+            }
+
         
         $userIsCreator = Creator::where('user_id', $user->id)->exists();
         $userIsTeacher = $user->profile_type === 'teacher';
@@ -58,11 +72,13 @@ class ProfileController extends Controller
         // Get followers count
         $followersCount = $user->followers()->count();
 
-        // Get following count
-        $followingCount = $user->followings()->count();
 
         // Get notifications
-        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+        $notifications = Notification::with('sender')
+         ->where('user_id', auth()->user()->id) 
+         ->where('read', 0)
+         ->orderByDesc('created_at')
+         ->get();
         $notificationCount = $notifications->count();
         
         return view('profile', [
@@ -72,7 +88,6 @@ class ProfileController extends Controller
             'userIsCreator' => $userIsCreator,
             'userIsTeacher' => $userIsTeacher,
             'followersCount' => $followersCount,
-            'followingCount' => $followingCount,
             'notifications' => $notifications,
             'notificationCount' => $notificationCount,
         ]);
@@ -115,7 +130,11 @@ class ProfileController extends Controller
 
        
         // Get notifications
-        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+        $notifications = Notification::with('sender')
+         ->where('user_id', auth()->user()->id) 
+         ->where('read', 0)
+         ->orderByDesc('created_at')
+         ->get();
         $notificationCount = $notifications->count();
 
         return view('profile.edit-profile', [
@@ -259,9 +278,26 @@ class ProfileController extends Controller
 
          // Get the user's posts
         $posts = $user->posts()->latest()->get();
-        // Get following count
-        $notifications = Notification::where('user_id', $user->id)->orderByDesc('created_at')->get();
+
+             // Check if the user has reshared each post and count the reshares
+             foreach ($posts as $post) {
+                $post->reshared = ResharedPost::where('user_id', $user->id)
+                                               ->where('original_post_id', $post->id)
+                                               ->exists();
+                $post->reshare_count = ResharedPost::where('original_post_id', $post->id)
+                                                   ->count();
+            }
+            
+        // Get user's notifications
+        $notifications = Notification::with('sender')
+         ->where('user_id', auth()->user()->id) 
+         ->where('read', 0)
+         ->orderByDesc('created_at')
+         ->get();
         $notificationCount = $notifications->count();
+
+          // Get followers count
+          $followersCount = $user->followers()->count();
 
             return view('profile.show', [
             'user' => $user,
@@ -269,6 +305,7 @@ class ProfileController extends Controller
             'posts' => $posts,
             'notifications' => $notifications,
             'notificationCount' => $notificationCount,
+            'followersCount' => $followersCount,
             ]);
         }
 }

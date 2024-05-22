@@ -13,14 +13,16 @@ class FollowerController extends Controller
       $follower = auth()->user();
       $follower->followings()->attach($user);
 
-      $message = $follower->first_name .' '. $follower->surname . ' started following you.';
-
-  
-
+      $message =  'started following you.';
+      $type = 'New Connection';
+      $follower_name = $follower->first_name .' '. $follower->surname;
+      
        // Create a notification for the user being followed
         Notification::create([
           'user_id' => $user->id,
           'sender_id' => $follower->id,
+          'type' => $type,
+          'follower_name' => $follower_name,
           'message' => $message,
       ]);
 

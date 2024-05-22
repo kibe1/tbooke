@@ -12,6 +12,8 @@ use App\Http\Controllers\TbookeLearningController;
 use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\LikeController;
 
 
 Route::get('/', function () {
@@ -49,6 +51,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('/users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
+    Route::post('/notifications/read', [NotificationsController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('/post/{id}/like', [LikeController::class, 'likePost'])->name('post.like');
+    Route::post('/post/{id}/unlike', [LikeController::class, 'unlikePost'])->name('post.unlike');
+    Route::post('/posts/{post}/share', [PostController::class, 'sharePost'])->name('post.share');
+
 });
 
 

@@ -26,6 +26,9 @@
 				</div>
 	</footer>
 </div>
+ <script>
+	const notificationsClear = "{{ route('notifications.markAsRead') }}";
+ </script>
 	<script src="/docsupport/jquery-3.2.1.min.js" type="text/javascript"></script>
 	<script src="/docsupport/chosen.jquery.js" type="text/javascript"></script>
 	<script src="/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
